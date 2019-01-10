@@ -1,4 +1,4 @@
-package com.dicoding.millatip.footballapps.data
+package com.dicoding.millatip.footballapps.data.model
 
 import com.squareup.moshi.Json
 
