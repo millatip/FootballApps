@@ -1,6 +1,6 @@
 package com.dicoding.millatip.footballapps.presentation.base
 
-class BasePresenter<V : BaseView> : IBasePresenter<V> {
+open class BasePresenter<V : BaseView> : IBasePresenter<V> {
     var view: V? = null
 
     override fun onAttach(view: V) {
