@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.dicoding.millatip.footballapps.R
+import com.dicoding.millatip.footballapps.presentation.ui.nextmatch.NextMatchFragment
+import com.dicoding.millatip.footballapps.presentation.ui.prevmatch.PrevMatchFragment
 import com.dicoding.millatip.footballapps.utils.ViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_match.*
 
@@ -18,7 +20,6 @@ class MatchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_match, container, false)
     }
 
@@ -30,6 +31,8 @@ class MatchFragment : Fragment() {
 
     private fun setupWithViewPager(viewPager: ViewPager){
         val adapter = ViewPagerAdapter(childFragmentManager)
-
+        adapter.addFragment(PrevMatchFragment(), "Last")
+        adapter.addFragment(NextMatchFragment(), "Next")
+        viewPager.adapter = adapter
     }
 }
