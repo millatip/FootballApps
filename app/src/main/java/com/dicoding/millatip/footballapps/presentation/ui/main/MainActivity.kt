@@ -23,9 +23,6 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.action_match -> viewPager.currentItem = 0
-                R.id.action_team -> viewPager.currentItem = 1
-                R.id.action_favorite -> viewPager.currentItem = 2
-
             }
             true
         }
@@ -34,8 +31,6 @@ class MainActivity : AppCompatActivity() {
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(MatchFragment(), "Match")
-        adapter.addFragment(TeamFragment(), "Team")
-        adapter.addFragment(FavoriteFragment(), "Favorite")
         viewPager.adapter = adapter
     }
 }
