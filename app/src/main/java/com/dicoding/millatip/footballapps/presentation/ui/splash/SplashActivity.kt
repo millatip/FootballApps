@@ -12,7 +12,7 @@ import org.koin.android.ext.android.inject
 
 class SplashActivity : AppCompatActivity(), SplashContract.View {
 
-    val presenter: SplashPresenter<SplashContract.View> by inject()
+    private val presenter: SplashPresenter<SplashContract.View> by inject()
 
     override fun openActivity() {
         startActivity<MainActivity>()
