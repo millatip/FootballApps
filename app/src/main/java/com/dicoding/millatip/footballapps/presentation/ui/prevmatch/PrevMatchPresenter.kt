@@ -20,7 +20,7 @@ constructor(private val matchRepository: MatchRepository, private val leagueRepo
         view?.showLoading()
         val leagueId = view?.selectedLeague?.leagueId
         GlobalScope.launch(Dispatchers.Main){
-            val data = matchRepository.getNextMatch(leagueId.toString())
+            val data = matchRepository.getPreviousMatch(leagueId.toString())
             view?.displayMatchList(data)
             view?.hideLoading()
         }
