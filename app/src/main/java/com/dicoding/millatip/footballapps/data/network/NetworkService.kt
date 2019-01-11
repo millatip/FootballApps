@@ -14,6 +14,6 @@ interface NetworkService {
     @GET("v1/json/1/eventspastleague.php")
     fun getPreviousMatch(@Query("id") leagueId: String) : Deferred<MatchResponse>
 
-    @GET("v1/json/eventsnextleague.php")
+    @GET("v1/json/1/eventsnextleague.php")
     fun getNextMatch(@Query("id") leagueId: String) : Deferred<MatchResponse>
 }

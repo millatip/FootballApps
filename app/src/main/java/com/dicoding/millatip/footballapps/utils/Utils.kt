@@ -34,7 +34,7 @@ fun dateFormatter(inputDate: String?): String{
 }
 
 fun timeFormatter(inputTime: String?) : String{
-    val time = inputTime?.split(";")
+    val time = inputTime?.split(":")
     return "${time?.get(0)}:${time?.get(1)}"
 }
 
