@@ -5,7 +5,8 @@ import com.dicoding.millatip.footballapps.data.model.Match
 import com.dicoding.millatip.footballapps.data.network.NetworkService
 
 class MatchDataStore
-constructor(val networkService: NetworkService, val context: Context) : MatchRepository{
+constructor(private val networkService: NetworkService, val context: Context) : MatchRepository{
+
     override suspend fun getNextMatch(leagueId: String): List<Match> {
         return networkService.getNextMatch(leagueId).await().events
     }
