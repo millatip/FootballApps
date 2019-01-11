@@ -5,19 +5,17 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-
 import com.dicoding.millatip.footballapps.R
 import com.dicoding.millatip.footballapps.data.model.League
 import com.dicoding.millatip.footballapps.data.model.Match
-import com.dicoding.millatip.footballapps.utils.*
+import com.dicoding.millatip.footballapps.utils.hide
+import com.dicoding.millatip.footballapps.utils.show
 import kotlinx.android.synthetic.main.fragment_prev_match.*
-import kotlinx.android.synthetic.main.prev_match_list.view.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 import org.koin.android.ext.android.inject

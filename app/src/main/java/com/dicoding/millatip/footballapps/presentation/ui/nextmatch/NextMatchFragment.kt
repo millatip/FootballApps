@@ -7,7 +7,6 @@ import android.provider.CalendarContract
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.dicoding.millatip.footballapps.data.model.League
 import com.dicoding.millatip.footballapps.data.model.Match
 import com.dicoding.millatip.footballapps.utils.*
 import kotlinx.android.synthetic.main.fragment_next_match.*
-import kotlinx.android.synthetic.main.next_match_list.view.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 import org.koin.android.ext.android.inject
