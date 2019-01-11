@@ -4,12 +4,4 @@
             android:id="@+id/action_match"
             android:title="@string/match"
             android:icon="@drawable/ic_event_available"/>
-    <item
-            android:id="@+id/action_team"
-            android:title="@string/team"
-            android:icon="@drawable/ic_soccer"/>
-    <item
-            android:id="@+id/action_favorite"
-            android:title="@string/favorites"
-            android:icon="@drawable/ic_stars"/>
 </menu>
