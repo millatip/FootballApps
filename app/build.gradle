@@ -41,7 +41,7 @@ dependencies {
     implementation "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation "com.squareup.retrofit2:converter-moshi:2.4.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.5.0"
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
     //CoroutineAdapter
