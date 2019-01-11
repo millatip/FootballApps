@@ -7,6 +7,8 @@ import com.dicoding.millatip.footballapps.data.repository.match.MatchDataStore
 import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
 import com.dicoding.millatip.footballapps.presentation.ui.nextmatch.NextMatchContract
 import com.dicoding.millatip.footballapps.presentation.ui.nextmatch.NextMatchPresenter
+import com.dicoding.millatip.footballapps.presentation.ui.prevmatch.PrevMatchContract
+import com.dicoding.millatip.footballapps.presentation.ui.prevmatch.PrevMatchPresenter
 import com.dicoding.millatip.footballapps.presentation.ui.splash.SplashContract
 import com.dicoding.millatip.footballapps.presentation.ui.splash.SplashPresenter
 import com.dicoding.millatip.footballapps.utils.Constants
@@ -56,4 +58,5 @@ val appModule = module {
 
     factory { SplashPresenter<SplashContract.View>(get()) }
     factory { NextMatchPresenter<NextMatchContract.View>(get(), get()) }
+    factory { PrevMatchPresenter<PrevMatchContract.View>(get(), get()) }
 }
