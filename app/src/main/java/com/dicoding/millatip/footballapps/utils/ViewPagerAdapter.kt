@@ -10,7 +10,7 @@ class ViewPagerAdapter(fragmentManager: FragmentManager?) : FragmentPagerAdapter
     private val fragmentTitleList = ArrayList<String>()
 
 
-    override fun getItem(p0: Int): Fragment = fragmentList[p0]
+    override fun getItem(position: Int): Fragment = fragmentList[position]
 
     override fun getCount(): Int = fragmentList.size
 
