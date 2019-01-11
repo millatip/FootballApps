@@ -6,7 +6,7 @@ import java.util.*
 
 fun getTimeMillis(dateTime: String) : Long{
     var millisecond = 0L
-    val dateFormat = SimpleDateFormat("E, dd MMM yyyy HH:mm")
+    val dateFormat = SimpleDateFormat("E, dd MMM yyyy HH:mm", Locale.getDefault())
     try {
         val date = dateFormat.parse(dateTime)
         millisecond = date.time
@@ -18,8 +18,8 @@ fun getTimeMillis(dateTime: String) : Long{
 }
 
 fun dateFormatter(inputDate: String?): String{
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd")
-    val outputFormat = SimpleDateFormat("dd MMM yyyy")
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
     val beforeFormat: Date
     var afterFormat = ""
 
@@ -40,7 +40,7 @@ fun timeFormatter(inputTime: String?) : String{
 
 fun toGmtFormat(dateTime: String) : String{
     return try {
-        val formatter = SimpleDateFormat("dd MMM yyyy HH:mm")
+        val formatter = SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault())
         formatter.timeZone = TimeZone.getTimeZone("UTC")
         val gmtTime = formatter.parse(dateTime)
         formatter.timeZone = TimeZone.getDefault()
