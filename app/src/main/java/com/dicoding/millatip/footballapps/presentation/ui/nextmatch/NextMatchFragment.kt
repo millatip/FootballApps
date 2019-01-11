@@ -127,12 +127,12 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
     }
 
     internal class NextMatchAdapter(private val matches: List<Match>, val notificationListener: (Match) -> Unit) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>(){
-        override fun onCreateViewHolder(p0: ViewGroup, p1: Int): NextMatchAdapter.ViewHolder = ViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.next_match_list, p0, false))
+        override fun onCreateViewHolder(parent: ViewGroup, p1: Int): NextMatchAdapter.ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.next_match_list, parent, false))
 
         override fun getItemCount(): Int = matches.size
 
-        override fun onBindViewHolder(p0: NextMatchAdapter.ViewHolder, p1: Int) {
-            p0.bindItem(matches[p1])
+        override fun onBindViewHolder(holder: NextMatchAdapter.ViewHolder, position: Int) {
+            holder.bindItem(matches[position])
         }
 
         inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
