@@ -13,14 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-
 import com.dicoding.millatip.footballapps.R
 import com.dicoding.millatip.footballapps.data.model.League
 import com.dicoding.millatip.footballapps.data.model.Match
 import com.dicoding.millatip.footballapps.utils.*
 import kotlinx.android.synthetic.main.fragment_next_match.*
 import kotlinx.android.synthetic.main.next_match_list.view.*
-import kotlinx.android.synthetic.main.prev_match_list.view.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 import org.koin.android.ext.android.inject
@@ -37,13 +35,15 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_next_match, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        onLoadFragment(savedInstanceState)
+    }
 
+    private fun onLoadFragment(savedInstance: Bundle?) {
         onAttachView()
 
         swipeRefreshLayout.setColorSchemeColors(
@@ -53,7 +53,7 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
             ContextCompat.getColor(requireContext(), android.R.color.holo_red_light)
         )
         swipeRefreshLayout.onRefresh {
-            presenter.getLeagueList()
+            presenter.getMatchList()
         }
 
         spNextMatchList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -64,17 +64,17 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
                 selectedLeague = p0?.getItemAtPosition(p2) as League
                 presenter.getMatchList()
             }
-
         }
 
+        presenter.getLeagueList()
     }
 
     override fun showLoading() {
-        pbNextMatch.show()
+        pbNextMatch?.show()
     }
 
     override fun hideLoading() {
-        pbNextMatch.hide()
+        pbNextMatch?.hide()
     }
 
     override fun displayMatchList(events: List<Match>) {
@@ -119,6 +119,11 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
 
     override fun onDetachView() {
         presenter.onDetach()
+    }
+
+    override fun onDestroyView() {
+        onDetachView()
+        super.onDestroyView()
     }
 
     internal class NextMatchAdapter(private val matches: List<Match>, val notificationListener: (Match) -> Unit) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>(){
