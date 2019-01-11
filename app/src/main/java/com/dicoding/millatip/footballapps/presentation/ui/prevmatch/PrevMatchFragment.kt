@@ -109,30 +109,4 @@ class PrevMatchFragment : Fragment(), PrevMatchContract.View {
         super.onDestroyView()
     }
 
-    class PrevMatchAdapter(private val matches: List<Match>) : RecyclerView.Adapter<PrevMatchAdapter.ViewHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.prev_match_list, parent, false))
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.bindItem(matches[position])
-        }
-
-        override fun getItemCount(): Int = matches.size
-
-        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-            fun bindItem(match: Match) {
-                val date = dateFormatter(match.matchDate)
-                val time = timeFormatter(match.matchTime)
-
-                itemView.tvHomeTeamPrev.text = match.homeTeamName
-                itemView.tvAwayTeamPrev.text = match.awayTeamName
-                itemView.tvDateTimePrev.text = toGmtFormat("$date $time")
-                itemView.tvHomeScorePrev.text = match.homeScore
-                itemView.tvAwayScorePrev.text = match.awayScore
-            }
-        }
-
-    }
-
-
 }
