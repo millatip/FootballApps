@@ -33,7 +33,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDateTimeDetail">
+                app:layout_constraintTop_toBottomOf="@+id/tvDateTimeDetail">
             <android.support.constraint.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                         android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/tvHomeScore"
+                        app:layout_constraintEnd_toStartOf="@+id/tvHomeScore"
                 />
                 <TextView
                         android:id="@+id/tvHomeTeamDetail"
@@ -59,9 +59,9 @@
                         android:layout_marginTop="8dp"
                         tools:text="Home Team"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/ivHomeTeam"
-                        app:layout_constraintStart_toStartOf="@id/ivHomeTeam"
-                        app:layout_constraintTop_toBottomOf="@id/ivHomeTeam"/>
+                        app:layout_constraintEnd_toEndOf="@+id/ivHomeTeam"
+                        app:layout_constraintStart_toStartOf="@+id/ivHomeTeam"
+                        app:layout_constraintTop_toBottomOf="@+id/ivHomeTeam"/>
 
                 <TextView
                         android:id="@+id/tvHomeScore"
@@ -94,7 +94,7 @@
                         android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/tvAwayScore"
+                        app:layout_constraintStart_toEndOf="@+id/tvAwayScore"
                         app:layout_constraintEnd_toEndOf="parent"
                 />
                 <TextView
@@ -105,9 +105,9 @@
                         android:layout_marginTop="8dp"
                         tools:text="Home Team"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/ivAwayTeam"
-                        app:layout_constraintStart_toStartOf="@id/ivAwayTeam"
-                        app:layout_constraintTop_toBottomOf="@id/ivAwayTeam"/>
+                        app:layout_constraintEnd_toEndOf="@+id/ivAwayTeam"
+                        app:layout_constraintStart_toStartOf="@+id/ivAwayTeam"
+                        app:layout_constraintTop_toBottomOf="@+id/ivAwayTeam"/>
 
                 <TextView
                         android:id="@+id/tvAwayScore"
