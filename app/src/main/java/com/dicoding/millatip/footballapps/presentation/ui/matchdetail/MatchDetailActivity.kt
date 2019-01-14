@@ -19,6 +19,7 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailContract.View {
     private lateinit var match: Match
 
     companion object {
+        const val TAG = "MatchDetailActivity"
         const val EXTRA_MATCH_ID = "matchId"
         const val EXTRA_HOME_TEAM_ID = "homeTeamId"
         const val EXTRA_AWAY_TEAM_ID = "awayTeamId"
