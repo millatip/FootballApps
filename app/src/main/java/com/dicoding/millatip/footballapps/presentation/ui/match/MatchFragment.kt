@@ -35,4 +35,5 @@ class MatchFragment : Fragment() {
         adapter.addFragment(NextMatchFragment(), "Next")
         viewPager.adapter = adapter
     }
+
 }

@@ -54,6 +54,7 @@ private fun createNetworkService(retrofit: Retrofit): NetworkService{
 val networkModule = module {
     single { createRetrofit() }
     single { createNetworkService(get()) }
+
 }
 
 val appModule = module {
@@ -65,4 +66,5 @@ val appModule = module {
     factory { NextMatchPresenter<NextMatchContract.View>(get(), get()) }
     factory { PrevMatchPresenter<PrevMatchContract.View>(get(), get()) }
     factory { MatchDetailPresenter<MatchDetailContract.View>(get(), get()) }
+
 }

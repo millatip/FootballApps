@@ -12,6 +12,7 @@ import java.lang.Exception
 class NextMatchPresenter<V : NextMatchContract.View>
 constructor(private val matchRepository: MatchRepository, private val leagueRepository: LeagueRepository) :
     BasePresenter<V>(), NextMatchContract.UserActionListener<V> {
+
     override fun getLeagueList() {
         GlobalScope.launch(Dispatchers.Main) {
             try {
@@ -37,6 +38,6 @@ constructor(private val matchRepository: MatchRepository, private val leagueRepo
                 Log.i("NextMatchFragment", "NextMatchPresenter.getMatchList()")
             }
         }
-
     }
+
 }

@@ -35,4 +35,5 @@ class MatchDetailAdapter (private val items: List<String>?, val type: String)
             itemView.tvItem.text = item?.trim()
         }
     }
+
 }

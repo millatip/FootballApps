@@ -93,4 +93,5 @@ data class Match(
 
     @field:Json(name = "strSport")
     var sport:String? = null
-    )
+
+)

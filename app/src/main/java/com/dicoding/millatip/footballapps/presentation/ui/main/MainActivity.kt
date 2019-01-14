@@ -31,4 +31,5 @@ class MainActivity : AppCompatActivity() {
         adapter.addFragment(MatchFragment(), "Match")
         viewPager.adapter = adapter
     }
+
 }

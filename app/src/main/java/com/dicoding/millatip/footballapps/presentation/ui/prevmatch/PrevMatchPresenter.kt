@@ -10,8 +10,9 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class PrevMatchPresenter<V : PrevMatchContract.View>
-constructor(private val matchRepository: MatchRepository, private val leagueRepository: LeagueRepository) :
-    BasePresenter<V>(), PrevMatchContract.UserActionListener<V> {
+constructor(private val matchRepository: MatchRepository, private val leagueRepository: LeagueRepository)
+    : BasePresenter<V>(), PrevMatchContract.UserActionListener<V> {
+
     override fun getLeagueList() {
         GlobalScope.launch(Dispatchers.Main) {
             try {
@@ -23,7 +24,6 @@ constructor(private val matchRepository: MatchRepository, private val leagueRepo
 
             }
         }
-
     }
 
     override fun getMatchList() {
@@ -39,6 +39,6 @@ constructor(private val matchRepository: MatchRepository, private val leagueRepo
                 Log.i("PrevMatchFragment", "PrevMatchPresenter.getMatchList()")
             }
         }
-
     }
+
 }

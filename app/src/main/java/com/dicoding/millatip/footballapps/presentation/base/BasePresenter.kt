@@ -10,4 +10,5 @@ open class BasePresenter<V : BaseView> : IBasePresenter<V> {
     override fun onDetach() {
         this.view = null
     }
+
 }
