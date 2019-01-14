@@ -11,7 +11,7 @@ import com.dicoding.millatip.footballapps.utils.timeFormatter
 import com.dicoding.millatip.footballapps.utils.toGmtFormat
 import kotlinx.android.synthetic.main.prev_match_list.view.*
 
-class PrevMatchAdapter(private val matches: List<Match>) : RecyclerView.Adapter<PrevMatchAdapter.ViewHolder>() {
+class PrevMatchAdapter(private val matches: List<Match>, val listener: (Match) -> Unit) : RecyclerView.Adapter<PrevMatchAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
         LayoutInflater.from(parent.context).inflate(
             R.layout.prev_match_list, parent, false))
@@ -33,6 +33,7 @@ class PrevMatchAdapter(private val matches: List<Match>) : RecyclerView.Adapter<
             itemView.tvDateTimePrev.text = toGmtFormat("$date $time")
             itemView.tvHomeScorePrev.text = match.homeScore
             itemView.tvAwayScorePrev.text = match.awayScore
+            itemView.setOnClickListener { listener(match) }
         }
     }
 

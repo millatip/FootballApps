@@ -13,11 +13,13 @@ import android.widget.ArrayAdapter
 import com.dicoding.millatip.footballapps.R
 import com.dicoding.millatip.footballapps.data.model.League
 import com.dicoding.millatip.footballapps.data.model.Match
+import com.dicoding.millatip.footballapps.presentation.ui.matchdetail.MatchDetailActivity
 import com.dicoding.millatip.footballapps.utils.hide
 import com.dicoding.millatip.footballapps.utils.show
 import kotlinx.android.synthetic.main.fragment_prev_match.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
+import org.jetbrains.anko.support.v4.startActivity
 import org.koin.android.ext.android.inject
 
 
@@ -53,7 +55,7 @@ class PrevMatchFragment : Fragment(), PrevMatchContract.View {
             presenter.getMatchList()
         }
 
-        spPrevMatchList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spPrevMatchList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
@@ -78,7 +80,13 @@ class PrevMatchFragment : Fragment(), PrevMatchContract.View {
 
     override fun displayMatchList(events: List<Match>) {
         swipeRefreshLayout.isRefreshing = false
-        val adapter = PrevMatchAdapter(events)
+        val adapter = PrevMatchAdapter(events) {
+            startActivity<MatchDetailActivity>(
+                MatchDetailActivity.EXTRA_MATCH_ID to it.matchId,
+                MatchDetailActivity.EXTRA_HOME_TEAM_ID to it.homeTeamId,
+                MatchDetailActivity.EXTRA_AWAY_TEAM_ID to it.awayTeamId
+            )
+        }
 
         rvPrevMatch.adapter = adapter
         rvPrevMatch.layoutManager = LinearLayoutManager(context)

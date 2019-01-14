@@ -15,10 +15,12 @@ import android.widget.ArrayAdapter
 import com.dicoding.millatip.footballapps.R
 import com.dicoding.millatip.footballapps.data.model.League
 import com.dicoding.millatip.footballapps.data.model.Match
+import com.dicoding.millatip.footballapps.presentation.ui.matchdetail.MatchDetailActivity
 import com.dicoding.millatip.footballapps.utils.*
 import kotlinx.android.synthetic.main.fragment_next_match.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
+import org.jetbrains.anko.support.v4.startActivity
 import org.koin.android.ext.android.inject
 
 class NextMatchFragment : Fragment(), NextMatchContract.View {
@@ -78,7 +80,13 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
     override fun displayMatchList(events: List<Match>) {
         swipeRefreshLayout.isRefreshing = false
 
-        val adapter = NextMatchAdapter(events) {
+        val adapter = NextMatchAdapter(events, {
+            startActivity<MatchDetailActivity>(
+                MatchDetailActivity.EXTRA_MATCH_ID to it.matchId,
+                MatchDetailActivity.EXTRA_HOME_TEAM_ID to it.homeTeamId,
+                MatchDetailActivity.EXTRA_AWAY_TEAM_ID to it.awayTeamId
+            )
+        }, {
             val intent = Intent(Intent.ACTION_INSERT)
             intent.type = "vnd.android.cursor.item/event"
 
@@ -93,7 +101,7 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
             intent.putExtra(CalendarContract.Events.TITLE, it.matchName)
 
             startActivity(intent)
-        }
+        })
 
         rvNextMatch.adapter = adapter
         rvNextMatch.layoutManager = LinearLayoutManager(context)

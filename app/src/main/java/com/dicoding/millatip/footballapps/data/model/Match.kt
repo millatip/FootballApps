@@ -37,10 +37,10 @@ data class Match(
     @field:Json(name = "intAwayScore")
     var awayScore: String? = null,
 
-    @field:Json(name = "strHomeGoalsDetails")
+    @field:Json(name = "strHomeGoalDetails")
     var homeGoals: String? = null,
 
-    @field:Json(name = "strAwayGoalsDetails")
+    @field:Json(name = "strAwayGoalDetails")
     var awayGoals: String? = null,
 
     @field:Json(name = "strHomeRedCards")

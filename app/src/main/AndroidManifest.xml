@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.ui.splash.SplashActivity">
-
+        </activity>
+        <activity android:name=".presentation.ui.matchdetail.MatchDetailActivity">
         </activity>
     </application>
 

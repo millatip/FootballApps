@@ -5,6 +5,10 @@ import com.dicoding.millatip.footballapps.data.repository.league.LeagueDataStore
 import com.dicoding.millatip.footballapps.data.repository.league.LeagueRepository
 import com.dicoding.millatip.footballapps.data.repository.match.MatchDataStore
 import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
+import com.dicoding.millatip.footballapps.data.repository.team.TeamDataStore
+import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
+import com.dicoding.millatip.footballapps.presentation.ui.matchdetail.MatchDetailContract
+import com.dicoding.millatip.footballapps.presentation.ui.matchdetail.MatchDetailPresenter
 import com.dicoding.millatip.footballapps.presentation.ui.nextmatch.NextMatchContract
 import com.dicoding.millatip.footballapps.presentation.ui.nextmatch.NextMatchPresenter
 import com.dicoding.millatip.footballapps.presentation.ui.prevmatch.PrevMatchContract
@@ -55,8 +59,10 @@ val networkModule = module {
 val appModule = module {
     factory<MatchRepository>{MatchDataStore(get(), androidContext())}
     factory<LeagueRepository>{LeagueDataStore(get(), androidContext())}
+    factory<TeamRepository> {TeamDataStore(get(), androidContext())}
 
     factory { SplashPresenter<SplashContract.View>(get()) }
     factory { NextMatchPresenter<NextMatchContract.View>(get(), get()) }
     factory { PrevMatchPresenter<PrevMatchContract.View>(get(), get()) }
+    factory { MatchDetailPresenter<MatchDetailContract.View>(get(), get()) }
 }
