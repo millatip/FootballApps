@@ -1,16 +1,14 @@
 package com.dicoding.millatip.footballapps.presentation.ui.matchdetail
 
 import com.dicoding.millatip.footballapps.data.model.Match
-import com.dicoding.millatip.footballapps.data.model.MatchResponse
 import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
 import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
 import com.dicoding.millatip.footballapps.utils.Constants
-import com.dicoding.millatip.footballapps.utils.CoroutineContextProvider
 import com.dicoding.millatip.footballapps.utils.TestContextProvider
 import kotlinx.coroutines.runBlocking
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -48,8 +46,10 @@ class MatchDetailPresenterTest {
         Mockito.verify(view).showLoading()
         Mockito.verify(view).displayMatch(response)
         Mockito.verify(view).hideLoading()
+    }
 
-
-
+    @After
+    fun tearDown(){
+        presenter.onDetach()
     }
 }

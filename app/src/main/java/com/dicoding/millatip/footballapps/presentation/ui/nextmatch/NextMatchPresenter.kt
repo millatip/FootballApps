@@ -1,14 +1,11 @@
 package com.dicoding.millatip.footballapps.presentation.ui.nextmatch
 
-import android.util.Log
 import com.dicoding.millatip.footballapps.data.repository.league.LeagueRepository
 import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
 import com.dicoding.millatip.footballapps.presentation.base.BasePresenter
 import com.dicoding.millatip.footballapps.utils.CoroutineContextProvider
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class NextMatchPresenter<V : NextMatchContract.View>
 constructor(

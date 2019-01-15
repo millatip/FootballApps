@@ -1,12 +1,9 @@
 package com.dicoding.millatip.footballapps.presentation.ui.matchdetail
 
-import android.util.Log
 import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
 import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
 import com.dicoding.millatip.footballapps.presentation.base.BasePresenter
-import com.dicoding.millatip.footballapps.presentation.ui.matchdetail.MatchDetailActivity.Companion.TAG
 import com.dicoding.millatip.footballapps.utils.CoroutineContextProvider
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

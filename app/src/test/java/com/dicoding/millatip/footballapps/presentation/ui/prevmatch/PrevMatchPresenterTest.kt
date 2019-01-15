@@ -7,6 +7,7 @@ import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
 import com.dicoding.millatip.footballapps.utils.Constants
 import com.dicoding.millatip.footballapps.utils.TestContextProvider
 import kotlinx.coroutines.runBlocking
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -52,5 +53,10 @@ class PrevMatchPresenterTest {
         Mockito.verify(view).showLoading()
         Mockito.verify(view).displayMatchList(response)
         Mockito.verify(view).hideLoading()
+    }
+
+    @After
+    fun tearDown(){
+        presenter.onDetach()
     }
 }
