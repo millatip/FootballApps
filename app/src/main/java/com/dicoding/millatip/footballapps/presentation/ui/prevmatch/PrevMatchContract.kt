@@ -7,7 +7,7 @@ import com.dicoding.millatip.footballapps.presentation.base.IBasePresenter
 
 interface PrevMatchContract {
 
-    interface View: BaseView {
+    interface View : BaseView {
         var selectedLeague: League
         fun showLoading()
         fun hideLoading()

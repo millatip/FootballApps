@@ -56,7 +56,7 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
             presenter.getMatchList()
         }
 
-        spNextMatchList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spNextMatchList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
