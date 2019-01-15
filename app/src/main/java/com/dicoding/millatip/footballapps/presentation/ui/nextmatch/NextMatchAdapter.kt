@@ -11,9 +11,14 @@ import com.dicoding.millatip.footballapps.utils.timeFormatter
 import com.dicoding.millatip.footballapps.utils.toGmtFormat
 import kotlinx.android.synthetic.main.next_match_list.view.*
 
-class NextMatchAdapter(private val matches: List<Match>, val notificationListener: (Match) -> Unit) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>(){
+class NextMatchAdapter(
+    private val matches: List<Match>,
+    val listener: (Match) -> Unit,
+    val notificationListener: (Match) -> Unit
+) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): NextMatchAdapter.ViewHolder = ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.next_match_list, parent, false))
+        LayoutInflater.from(parent.context).inflate(R.layout.next_match_list, parent, false)
+    )
 
     override fun getItemCount(): Int = matches.size
 
@@ -21,8 +26,8 @@ class NextMatchAdapter(private val matches: List<Match>, val notificationListene
         holder.bindItem(matches[position])
     }
 
-    inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
-        fun bindItem(match: Match){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bindItem(match: Match) {
             val date = dateFormatter(match.matchDate)
             val time = timeFormatter(match.matchTime)
 
@@ -30,7 +35,9 @@ class NextMatchAdapter(private val matches: List<Match>, val notificationListene
             itemView.tvAwayTeam.text = match.awayTeamName
             itemView.tvDateTime.text = toGmtFormat("$date $time")
             itemView.ivNotification.setOnClickListener { notificationListener(match) }
+            itemView.setOnClickListener { listener(match) }
         }
     }
 
 }
+

@@ -5,15 +5,14 @@ import com.dicoding.millatip.footballapps.data.model.League
 import com.dicoding.millatip.footballapps.data.network.NetworkService
 
 class LeagueDataStore
-constructor(private val networkService: NetworkService, val context: Context) : LeagueRepository{
+constructor(private val networkService: NetworkService, val context: Context) : LeagueRepository {
     override suspend fun getSoccerLeagueList(): List<League> {
         return getNetworkLeagueList()
     }
 
     override suspend fun getNetworkLeagueList(): List<League> {
         return networkService.getLeagueList().await().leagues
-            .filter {
-                league ->
+            .filter { league ->
                 league.sport == "Soccer"
             }
     }

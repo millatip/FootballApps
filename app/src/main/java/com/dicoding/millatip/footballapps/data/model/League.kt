@@ -15,4 +15,5 @@ data class League (
     override fun toString(): String {
         return if (leagueName == null) "" else leagueName.toString()
     }
+
 }

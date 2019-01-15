@@ -1,3 +1,3 @@
 package com.dicoding.millatip.footballapps.data.model
 
-data class LeagueResponse (val leagues: List<League>)
+data class TeamResponse(val teams: List<Team>)

@@ -7,4 +7,15 @@
     <string name="match">Match</string>
     <string name="team">Team</string>
     <string name="favorites">Favorites</string>
+    <string name="goals">Goals</string>
+    <string name="red_cards">Red Cards</string>
+    <string name="yellow_cards">Yellow Cards</string>
+    <string name="formations">Formations</string>
+    <string name="home_formations">Home Formations</string>
+    <string name="goal_keepers">Goal Keepers</string>
+    <string name="defenders">Defenders</string>
+    <string name="midfielders">Midfielders</string>
+    <string name="forwards">Forwards</string>
+    <string name="substitutes">Substitutes</string>
+    <string name="lineups">Lineups</string>
 </resources>

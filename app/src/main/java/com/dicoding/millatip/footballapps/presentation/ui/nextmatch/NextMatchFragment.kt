@@ -1,7 +1,10 @@
 package com.dicoding.millatip.footballapps.presentation.ui.nextmatch
 
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.support.v4.app.Fragment
@@ -15,10 +18,12 @@ import android.widget.ArrayAdapter
 import com.dicoding.millatip.footballapps.R
 import com.dicoding.millatip.footballapps.data.model.League
 import com.dicoding.millatip.footballapps.data.model.Match
+import com.dicoding.millatip.footballapps.presentation.ui.matchdetail.MatchDetailActivity
 import com.dicoding.millatip.footballapps.utils.*
 import kotlinx.android.synthetic.main.fragment_next_match.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
+import org.jetbrains.anko.support.v4.startActivity
 import org.koin.android.ext.android.inject
 
 class NextMatchFragment : Fragment(), NextMatchContract.View {
@@ -26,8 +31,15 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
     val presenter: NextMatchPresenter<NextMatchContract.View> by inject()
 
     override var selectedLeague: League
-        get() = spNextMatchList.selectedItem as League
+        get() = spNextMatchList?.selectedItem as League
         set(value) {}
+
+    private fun isNetworkAvailable(context: Context?): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo: NetworkInfo?
+        activeNetworkInfo = cm.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,10 +63,15 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
             ContextCompat.getColor(requireContext(), android.R.color.holo_red_light)
         )
         swipeRefreshLayout.onRefresh {
-            presenter.getMatchList()
+            if (isNetworkAvailable(context)) {
+                presenter.getMatchList()
+            } else {
+                swipeRefreshLayout.isRefreshing = false
+                rvNextMatch.snackbar("No internet connection.")
+            }
         }
 
-        spNextMatchList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spNextMatchList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
@@ -78,7 +95,13 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
     override fun displayMatchList(events: List<Match>) {
         swipeRefreshLayout.isRefreshing = false
 
-        val adapter = NextMatchAdapter(events) {
+        val adapter = NextMatchAdapter(events, {
+            startActivity<MatchDetailActivity>(
+                MatchDetailActivity.EXTRA_MATCH_ID to it.matchId,
+                MatchDetailActivity.EXTRA_HOME_TEAM_ID to it.homeTeamId,
+                MatchDetailActivity.EXTRA_AWAY_TEAM_ID to it.awayTeamId
+            )
+        }, {
             val intent = Intent(Intent.ACTION_INSERT)
             intent.type = "vnd.android.cursor.item/event"
 
@@ -93,7 +116,7 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
             intent.putExtra(CalendarContract.Events.TITLE, it.matchName)
 
             startActivity(intent)
-        }
+        })
 
         rvNextMatch.adapter = adapter
         rvNextMatch.layoutManager = LinearLayoutManager(context)
@@ -123,6 +146,5 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
         onDetachView()
         super.onDestroyView()
     }
-
 
 }

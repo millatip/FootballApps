@@ -1,24 +1,24 @@
-package com.dicoding.millatip.footballapps.presentation.ui.nextmatch
+package com.dicoding.millatip.footballapps.presentation.ui.matchdetail
 
-import com.dicoding.millatip.footballapps.data.model.League
 import com.dicoding.millatip.footballapps.data.model.Match
 import com.dicoding.millatip.footballapps.presentation.base.BaseView
 import com.dicoding.millatip.footballapps.presentation.base.IBasePresenter
 
-interface NextMatchContract {
+interface MatchDetailContract {
 
     interface View : BaseView {
-        var selectedLeague: League
         fun showLoading()
         fun hideLoading()
-        fun displayMatchList(events: List<Match>)
+        fun displayMatch(match: Match)
         fun displayErrorMessage(message: String)
-        fun displayLeagueList(leagues: List<League>)
+        fun displayHomeBadge(teamBadge: String?)
+        fun displayAwayBadge(teamBadge: String?)
     }
 
     interface UserActionListener<V : View> : IBasePresenter<V> {
-        fun getMatchList()
-        fun getLeagueList()
+        fun getMatchDetail(matchId: String)
+        fun getHomeTeamBadge(teamId: String)
+        fun getAwayTeamBadge(teamId: String)
     }
 
 }

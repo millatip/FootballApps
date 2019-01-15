@@ -5,6 +5,10 @@ import com.dicoding.millatip.footballapps.data.repository.league.LeagueDataStore
 import com.dicoding.millatip.footballapps.data.repository.league.LeagueRepository
 import com.dicoding.millatip.footballapps.data.repository.match.MatchDataStore
 import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
+import com.dicoding.millatip.footballapps.data.repository.team.TeamDataStore
+import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
+import com.dicoding.millatip.footballapps.presentation.ui.matchdetail.MatchDetailContract
+import com.dicoding.millatip.footballapps.presentation.ui.matchdetail.MatchDetailPresenter
 import com.dicoding.millatip.footballapps.presentation.ui.nextmatch.NextMatchContract
 import com.dicoding.millatip.footballapps.presentation.ui.nextmatch.NextMatchPresenter
 import com.dicoding.millatip.footballapps.presentation.ui.prevmatch.PrevMatchContract
@@ -20,9 +24,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
-private fun createRetrofit(): Retrofit{
+private fun createRetrofit(): Retrofit {
     val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor{ chain ->
+        .addInterceptor { chain ->
             val request = chain.request()
                 .newBuilder()
                 .method(chain.request().method(), chain.request().body())
@@ -34,7 +38,7 @@ private fun createRetrofit(): Retrofit{
         .readTimeout(60, TimeUnit.SECONDS)
         .build()
 
-    val builder =  Retrofit.Builder()
+    val builder = Retrofit.Builder()
     builder.client(okHttpClient)
         .baseUrl(Constants.BASE_URL)
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
@@ -43,20 +47,25 @@ private fun createRetrofit(): Retrofit{
     return builder.build()
 }
 
-private fun createNetworkService(retrofit: Retrofit): NetworkService{
+private fun createNetworkService(retrofit: Retrofit): NetworkService {
     return retrofit.create(NetworkService::class.java)
 }
 
 val networkModule = module {
     single { createRetrofit() }
     single { createNetworkService(get()) }
+
 }
 
 val appModule = module {
-    factory<MatchRepository>{MatchDataStore(get(), androidContext())}
-    factory<LeagueRepository>{LeagueDataStore(get(), androidContext())}
+    factory<MatchRepository> { MatchDataStore(get(), androidContext()) }
+    factory<LeagueRepository> { LeagueDataStore(get(), androidContext()) }
+    factory<TeamRepository> { TeamDataStore(get(), androidContext()) }
 
     factory { SplashPresenter<SplashContract.View>(get()) }
     factory { NextMatchPresenter<NextMatchContract.View>(get(), get()) }
     factory { PrevMatchPresenter<PrevMatchContract.View>(get(), get()) }
+    factory { MatchDetailPresenter<MatchDetailContract.View>(get(), get()) }
+
 }
+
