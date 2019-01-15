@@ -1,7 +1,10 @@
 package com.dicoding.millatip.footballapps.presentation.ui.nextmatch
 
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.support.v4.app.Fragment
@@ -28,8 +31,15 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
     val presenter: NextMatchPresenter<NextMatchContract.View> by inject()
 
     override var selectedLeague: League
-        get() = spNextMatchList.selectedItem as League
+        get() = spNextMatchList?.selectedItem as League
         set(value) {}
+
+    private fun isNetworkAvailable(context: Context?): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo: NetworkInfo?
+        activeNetworkInfo = cm.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +63,12 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
             ContextCompat.getColor(requireContext(), android.R.color.holo_red_light)
         )
         swipeRefreshLayout.onRefresh {
-            presenter.getMatchList()
+            if (isNetworkAvailable(context)) {
+                presenter.getMatchList()
+            } else {
+                swipeRefreshLayout.isRefreshing = false
+                rvNextMatch.snackbar("No internet connection.")
+            }
         }
 
         spNextMatchList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

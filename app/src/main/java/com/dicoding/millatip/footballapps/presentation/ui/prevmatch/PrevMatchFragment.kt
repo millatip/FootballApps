@@ -1,6 +1,9 @@
 package com.dicoding.millatip.footballapps.presentation.ui.prevmatch
 
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -28,8 +31,15 @@ class PrevMatchFragment : Fragment(), PrevMatchContract.View {
     val presenter: PrevMatchPresenter<PrevMatchContract.View> by inject()
 
     override var selectedLeague: League
-        get() = spPrevMatchList.selectedItem as League
+        get() = spPrevMatchList?.selectedItem as League
         set(value) {}
+
+    private fun isNetworkAvailable(context: Context?): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo: NetworkInfo?
+        activeNetworkInfo = cm.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +62,12 @@ class PrevMatchFragment : Fragment(), PrevMatchContract.View {
         )
 
         swipeRefreshLayout.onRefresh {
-            presenter.getMatchList()
+            if (isNetworkAvailable(context)) {
+                presenter.getMatchList()
+            } else {
+                swipeRefreshLayout.isRefreshing = false
+                rvPrevMatch.snackbar("No internet connection.")
+            }
         }
 
         spPrevMatchList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

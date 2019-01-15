@@ -22,7 +22,8 @@ constructor(
                 view?.hideLoading()
             } catch (e: Exception) {
                 e.printStackTrace()
-                view?.displayErrorMessage("MatchDetailPresenter.getMatchDetail()")
+                view?.hideLoading()
+                view?.displayErrorMessage("Get data failed. Check your internet connection")
             }
         }
     }
@@ -34,7 +35,6 @@ constructor(
                 view?.displayHomeBadge(data.teamBadge)
             } catch (e: Exception) {
                 e.printStackTrace()
-                view?.displayErrorMessage("MatchDetailPresenter.getHomeTeamBadge()")
             }
         }
     }
@@ -46,7 +46,6 @@ constructor(
                 view?.displayAwayBadge(data.teamBadge)
             } catch (e: Exception) {
                 e.printStackTrace()
-                view?.displayErrorMessage("MatchDetailPresenter.getAwayTeamBadge()")
             }
         }
     }

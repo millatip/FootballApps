@@ -22,7 +22,8 @@ constructor(
                 view?.displayLeagueList(data)
             } catch (e: Exception) {
                 e.printStackTrace()
-                view?.displayErrorMessage("NextMatchFragment = NextMatchPresenter.getLeagueList()")
+                view?.hideLoading()
+                view?.displayErrorMessage("Failed to get data.")
             }
         }
     }
@@ -37,7 +38,8 @@ constructor(
                 view?.hideLoading()
             } catch (e: Exception) {
                 e.printStackTrace()
-                view?.displayErrorMessage("NextMatchFragment = NextMatchPresenter.getMatchList()")
+                view?.hideLoading()
+                view?.displayErrorMessage("Failed to get data.")
             }
         }
     }
