@@ -4,20 +4,20 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun getTimeMillis(dateTime: String) : Long{
+fun getTimeMillis(dateTime: String): Long {
     var millisecond = 0L
     val dateFormat = SimpleDateFormat("E, dd MMM yyyy HH:mm", Locale.getDefault())
     try {
         val date = dateFormat.parse(dateTime)
         millisecond = date.time
-    }catch (e : Exception){
+    } catch (e: Exception) {
         e.printStackTrace()
     }
 
     return millisecond
 }
 
-fun dateFormatter(inputDate: String?): String{
+fun dateFormatter(inputDate: String?): String {
     val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
     val beforeFormat: Date
@@ -26,19 +26,19 @@ fun dateFormatter(inputDate: String?): String{
     try {
         beforeFormat = inputFormat.parse(inputDate)
         afterFormat = outputFormat.format(beforeFormat)
-    }catch (e : Exception){
+    } catch (e: Exception) {
         e.printStackTrace()
     }
 
-    return  afterFormat
+    return afterFormat
 }
 
-fun timeFormatter(inputTime: String?) : String{
+fun timeFormatter(inputTime: String?): String {
     val time = inputTime?.split(":")
     return "${time?.get(0)}:${time?.get(1)}"
 }
 
-fun toGmtFormat(dateTime: String) : String{
+fun toGmtFormat(dateTime: String): String {
     return try {
         val formatter = SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault())
         formatter.timeZone = TimeZone.getTimeZone("UTC")
@@ -46,7 +46,7 @@ fun toGmtFormat(dateTime: String) : String{
         formatter.timeZone = TimeZone.getDefault()
 
         formatter.format(gmtTime)
-    }catch (e: Exception){
+    } catch (e: Exception) {
         "Date Invalid / Not Found"
     }
 }

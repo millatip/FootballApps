@@ -24,9 +24,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
-private fun createRetrofit(): Retrofit{
+private fun createRetrofit(): Retrofit {
     val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor{ chain ->
+        .addInterceptor { chain ->
             val request = chain.request()
                 .newBuilder()
                 .method(chain.request().method(), chain.request().body())
@@ -38,7 +38,7 @@ private fun createRetrofit(): Retrofit{
         .readTimeout(60, TimeUnit.SECONDS)
         .build()
 
-    val builder =  Retrofit.Builder()
+    val builder = Retrofit.Builder()
     builder.client(okHttpClient)
         .baseUrl(Constants.BASE_URL)
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
@@ -47,7 +47,7 @@ private fun createRetrofit(): Retrofit{
     return builder.build()
 }
 
-private fun createNetworkService(retrofit: Retrofit): NetworkService{
+private fun createNetworkService(retrofit: Retrofit): NetworkService {
     return retrofit.create(NetworkService::class.java)
 }
 
@@ -58,9 +58,9 @@ val networkModule = module {
 }
 
 val appModule = module {
-    factory<MatchRepository>{MatchDataStore(get(), androidContext())}
-    factory<LeagueRepository>{LeagueDataStore(get(), androidContext())}
-    factory<TeamRepository> {TeamDataStore(get(), androidContext())}
+    factory<MatchRepository> { MatchDataStore(get(), androidContext()) }
+    factory<LeagueRepository> { LeagueDataStore(get(), androidContext()) }
+    factory<TeamRepository> { TeamDataStore(get(), androidContext()) }
 
     factory { SplashPresenter<SplashContract.View>(get()) }
     factory { NextMatchPresenter<NextMatchContract.View>(get(), get()) }
@@ -68,3 +68,4 @@ val appModule = module {
     factory { MatchDetailPresenter<MatchDetailContract.View>(get(), get()) }
 
 }
+

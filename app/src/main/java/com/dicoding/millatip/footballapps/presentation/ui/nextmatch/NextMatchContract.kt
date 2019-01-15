@@ -7,7 +7,7 @@ import com.dicoding.millatip.footballapps.presentation.base.IBasePresenter
 
 interface NextMatchContract {
 
-    interface View: BaseView{
+    interface View : BaseView {
         var selectedLeague: League
         fun showLoading()
         fun hideLoading()
@@ -16,7 +16,7 @@ interface NextMatchContract {
         fun displayLeagueList(leagues: List<League>)
     }
 
-    interface UserActionListener<V : View> : IBasePresenter<V>{
+    interface UserActionListener<V : View> : IBasePresenter<V> {
         fun getMatchList()
         fun getLeagueList()
     }

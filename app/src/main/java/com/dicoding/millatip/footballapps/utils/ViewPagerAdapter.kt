@@ -14,7 +14,7 @@ class ViewPagerAdapter(fragmentManager: FragmentManager?) : FragmentPagerAdapter
 
     override fun getCount(): Int = fragmentList.size
 
-    fun addFragment(fragment: Fragment, title: String){
+    fun addFragment(fragment: Fragment, title: String) {
         fragmentList.add(fragment)
         fragmentTitleList.add(title)
     }

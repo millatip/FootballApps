@@ -7,7 +7,8 @@ import com.dicoding.millatip.footballapps.data.network.NetworkService
 class TeamDataStore
 constructor(
     private val networkService: NetworkService,
-    val context: Context) : TeamRepository{
+    val context: Context
+) : TeamRepository {
     override suspend fun getTeamDetail(teamId: String?): Team {
         return networkService.getTeamDetail(teamId).await().teams[0]
     }

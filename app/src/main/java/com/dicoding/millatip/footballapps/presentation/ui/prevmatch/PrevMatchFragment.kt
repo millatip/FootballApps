@@ -116,3 +116,4 @@ class PrevMatchFragment : Fragment(), PrevMatchContract.View {
     }
 
 }
+

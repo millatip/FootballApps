@@ -132,5 +132,4 @@ class NextMatchFragment : Fragment(), NextMatchContract.View {
         super.onDestroyView()
     }
 
-
 }

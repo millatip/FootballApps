@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun bottomNavListener() {
         bottomNavigationView.setOnNavigationItemSelectedListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.action_match -> viewPager.currentItem = 0
             }
             true
@@ -33,3 +33,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+

@@ -11,7 +11,11 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class PrevMatchPresenter<V : PrevMatchContract.View>
-constructor(private val matchRepository: MatchRepository, private val leagueRepository: LeagueRepository, private val context: CoroutineContextProvider = CoroutineContextProvider()) :
+constructor(
+    private val matchRepository: MatchRepository,
+    private val leagueRepository: LeagueRepository,
+    private val context: CoroutineContextProvider = CoroutineContextProvider()
+) :
     BasePresenter<V>(), PrevMatchContract.UserActionListener<V> {
 
     override fun getLeagueList() {
@@ -21,7 +25,7 @@ constructor(private val matchRepository: MatchRepository, private val leagueRepo
                 view?.displayLeagueList(data)
             } catch (e: Exception) {
                 e.printStackTrace()
-                Log.i("PrevMatchFragment", "PrevMatchPresenter.getLeagueList()")
+                view?.displayErrorMessage("PrevMatchFragment = PrevMatchPresenter.getLeagueList()")
             }
         }
     }
@@ -36,7 +40,7 @@ constructor(private val matchRepository: MatchRepository, private val leagueRepo
                 view?.hideLoading()
             } catch (e: Exception) {
                 e.printStackTrace()
-                Log.i("PrevMatchFragment", "PrevMatchPresenter.getMatchList()")
+                view?.displayErrorMessage("PrevMatchFragment = PrevMatchPresenter.getMatchList()")
             }
         }
     }

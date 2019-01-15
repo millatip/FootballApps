@@ -43,7 +43,7 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailContract.View {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
+        return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 true
@@ -51,6 +51,7 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailContract.View {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     override fun showLoading() {
         pbMatchDetail.show()
     }
@@ -132,3 +133,4 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailContract.View {
     }
 
 }
+

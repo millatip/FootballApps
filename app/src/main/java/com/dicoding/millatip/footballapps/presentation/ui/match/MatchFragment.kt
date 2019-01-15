@@ -29,7 +29,7 @@ class MatchFragment : Fragment() {
         tabLayoutMatch.setupWithViewPager(viewPagerMatch)
     }
 
-    private fun setupWithViewPager(viewPager: ViewPager){
+    private fun setupWithViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(childFragmentManager)
         adapter.addFragment(PrevMatchFragment(), "Last")
         adapter.addFragment(NextMatchFragment(), "Next")
@@ -37,3 +37,4 @@ class MatchFragment : Fragment() {
     }
 
 }
+

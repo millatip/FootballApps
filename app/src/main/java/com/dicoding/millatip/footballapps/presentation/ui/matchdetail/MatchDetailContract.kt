@@ -6,7 +6,7 @@ import com.dicoding.millatip.footballapps.presentation.base.IBasePresenter
 
 interface MatchDetailContract {
 
-    interface View: BaseView{
+    interface View : BaseView {
         fun showLoading()
         fun hideLoading()
         fun displayMatch(match: Match)
@@ -15,7 +15,7 @@ interface MatchDetailContract {
         fun displayAwayBadge(teamBadge: String?)
     }
 
-    interface UserActionListener<V: View>: IBasePresenter<V>{
+    interface UserActionListener<V : View> : IBasePresenter<V> {
         fun getMatchDetail(matchId: String)
         fun getHomeTeamBadge(teamId: String)
         fun getAwayTeamBadge(teamId: String)
