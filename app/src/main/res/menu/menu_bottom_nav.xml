@@ -4,4 +4,8 @@
             android:id="@+id/action_match"
             android:title="@string/match"
             android:icon="@drawable/ic_event_available"/>
+    <item
+            android:id="@+id/action_fav"
+            android:title="@string/favorite"
+            android:icon="@drawable/ic_stars"/>
 </menu>
