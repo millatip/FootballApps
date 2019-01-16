@@ -1,5 +1,6 @@
 package com.dicoding.millatip.footballapps.presentation.ui.matchdetail
 
+import com.dicoding.millatip.footballapps.data.model.Match
 import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
 import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
 import com.dicoding.millatip.footballapps.presentation.base.BasePresenter
@@ -13,12 +14,14 @@ constructor(
     private val teamRepository: TeamRepository,
     private val context: CoroutineContextProvider = CoroutineContextProvider()
 ) : BasePresenter<V>(), MatchDetailContract.UserActionListener<V> {
+
     override fun getMatchDetail(matchId: String) {
         view?.showLoading()
         GlobalScope.launch(context.main) {
             try {
                 val data = matchRepository.getMatchDetail(matchId)
-                view?.displayMatch(data)
+                val favorite = matchRepository.isFavorite(matchId)
+                view?.displayMatch(data, favorite)
                 view?.hideLoading()
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -48,6 +51,16 @@ constructor(
                 e.printStackTrace()
             }
         }
+    }
+
+    override fun addToFavorite(match: Match) {
+        matchRepository.addToFavorite(match)
+        view?.onAddToFavorite()
+    }
+
+    override fun removeFromFavorite(match: Match) {
+        matchRepository.removeFromFavorite(match.matchId.toString())
+        view?.onRemoveFromFavorite()
     }
 
 }

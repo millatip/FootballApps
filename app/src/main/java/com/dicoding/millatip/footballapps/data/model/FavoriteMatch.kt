@@ -4,6 +4,7 @@ data class FavoriteMatch(
     val id: Long?,
     val matchId: String?,
     val matchName: String?,
+    val matchLeague: String?,
     val homeTeamId: String?,
     val homeTeam: String?,
     val awayTeamId: String?,

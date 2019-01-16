@@ -44,7 +44,7 @@ class MatchDetailPresenterTest {
 
         presenter.getMatchDetail(Constants.MATCH_ID)
         Mockito.verify(view).showLoading()
-        Mockito.verify(view).displayMatch(response)
+        Mockito.verify(view).displayMatch(response, false)
         Mockito.verify(view).hideLoading()
     }
 

@@ -1,8 +1,10 @@
 package com.dicoding.millatip.footballapps.presentation.ui.matchdetail
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
 import android.view.MenuItem
 import com.bumptech.glide.Glide
 import com.dicoding.millatip.footballapps.R
@@ -16,6 +18,8 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailContract.View {
 
     private val presenter: MatchDetailPresenter<MatchDetailContract.View> by inject()
 
+    private var menuItem: Menu? = null
+    private var isFavorite: Boolean = false
     private lateinit var match: Match
 
     companion object {
@@ -41,14 +45,38 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailContract.View {
         presenter.getAwayTeamBadge(intent.getStringExtra(EXTRA_AWAY_TEAM_ID))
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        menuItem = menu
+
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 true
             }
+            R.id.add_to_fav -> {
+                if (isFavorite) presenter.removeFromFavorite(match)
+                else presenter.addToFavorite(match)
+
+                isFavorite = !isFavorite
+                displayFavoriteStatus(isFavorite)
+
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun displayFavoriteStatus(favorite: Boolean) {
+        isFavorite = favorite
+        if (isFavorite)
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_fav)
+        else
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_add_to_fav)
     }
 
     override fun showLoading() {
@@ -59,8 +87,9 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailContract.View {
         pbMatchDetail.hide()
     }
 
-    override fun displayMatch(match: Match) {
+    override fun displayMatch(match: Match, favorite: Boolean) {
         this.match = match
+        displayFavoriteStatus(favorite)
 
         val date = dateFormatter(match.matchDate)
         val time = timeFormatter(match.matchTime)
@@ -104,6 +133,14 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailContract.View {
         rvHomeSubstitues.layoutManager = LinearLayoutManager(this)
         rvAwaySubstitutes.adapter = MatchDetailAdapter(match.awaySubs?.split(";"), AWAY_STRING)
         rvAwaySubstitutes.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun onAddToFavorite() {
+        pbMatchDetail.snackbar("Added to favorite")
+    }
+
+    override fun onRemoveFromFavorite() {
+        pbMatchDetail.snackbar("Removed from favorite")
     }
 
     override fun displayErrorMessage(message: String) {

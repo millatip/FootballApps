@@ -27,9 +27,9 @@ constructor(private val networkService: NetworkService, val context: Context) : 
         var isFavorite = false
 
         context.database.use {
-            val result = select(FavoriteMatch.TABLE_MATCH_FAVORITE)
+            val result = select(FavoriteMatch.TABLE_MATCH_FAVORITE).whereArgs("(MATCH_ID = {id})", "id" to matchId)
             val favorite = result.parseList(classParser<FavoriteMatch>())
-            if (favorite.isEmpty()) isFavorite = true
+            if (!favorite.isEmpty()) isFavorite = true
         }
 
         return isFavorite

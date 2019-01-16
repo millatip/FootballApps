@@ -6,7 +6,7 @@ import com.dicoding.millatip.footballapps.data.model.FavoriteMatch
 import com.dicoding.millatip.footballapps.data.model.League
 import org.jetbrains.anko.db.*
 
-class MyDatabaseOpenHelper(context: Context) : ManagedSQLiteOpenHelper(context, "FavoriteMatch.db", null, 1) {
+class MyDatabaseOpenHelper(context: Context) : ManagedSQLiteOpenHelper(context, "FavoriteMatches.db", null, 1) {
 
     companion object {
         private var instance: MyDatabaseOpenHelper? = null
