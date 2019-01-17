@@ -17,5 +17,6 @@
     <string name="substitutes">Substitutes</string>
     <string name="lineups">Lineups</string>
     <string name="favorite">Favorite</string>
+    <string name="favorites">Favorites</string>
 
 </resources>
