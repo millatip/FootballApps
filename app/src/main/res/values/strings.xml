@@ -5,8 +5,6 @@
     <string name="vs">vs</string>
 
     <string name="match">Match</string>
-    <string name="team">Team</string>
-    <string name="favorites">Favorites</string>
     <string name="goals">Goals</string>
     <string name="red_cards">Red Cards</string>
     <string name="yellow_cards">Yellow Cards</string>
@@ -18,4 +16,7 @@
     <string name="forwards">Forwards</string>
     <string name="substitutes">Substitutes</string>
     <string name="lineups">Lineups</string>
+    <string name="favorite">Favorite</string>
+    <string name="favorites">Favorites</string>
+
 </resources>

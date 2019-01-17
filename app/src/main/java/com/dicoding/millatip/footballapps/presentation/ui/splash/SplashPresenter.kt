@@ -10,9 +10,14 @@ class SplashPresenter<V: SplashContract.View>
 constructor(private val leagueRepository: LeagueRepository) : BasePresenter<V>(), SplashContract.UserActionListener<V>{
     override fun getLeagueList() {
         GlobalScope.launch(Dispatchers.Main){
-            val data = leagueRepository.getSoccerLeagueList()
-            view?.displayLeagueList(data)
-            view?.openActivity()
+            try {
+                val data = leagueRepository.getSoccerLeagueList()
+                leagueRepository.saveLeagueList(data)
+                view?.openActivity()
+            } catch (e: Exception) {
+                view?.displayErrorMessage("Unable to load league data")
+                view?.openActivity()
+            }
         }
     }
 }

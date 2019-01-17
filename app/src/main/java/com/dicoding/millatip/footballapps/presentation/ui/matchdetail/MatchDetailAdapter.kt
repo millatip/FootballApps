@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.dicoding.millatip.footballapps.R
 import kotlinx.android.synthetic.main.item_home_list.view.*
 
-class MatchDetailAdapter(private val items: List<String>?, val type: String) :
+class MatchDetailAdapter(private val items: List<String>?, private val type: String) :
     RecyclerView.Adapter<MatchDetailAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
