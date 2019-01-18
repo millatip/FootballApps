@@ -9,9 +9,11 @@ import android.view.MenuItem
 import com.bumptech.glide.Glide
 import com.dicoding.millatip.footballapps.R
 import com.dicoding.millatip.footballapps.data.model.Match
+import com.dicoding.millatip.footballapps.presentation.ui.teamdetail.TeamDetailActivity
 import com.dicoding.millatip.footballapps.utils.*
 import kotlinx.android.synthetic.main.activity_match_detail.*
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.inject
 
 class MatchDetailActivity : AppCompatActivity(), MatchDetailContract.View {
@@ -133,6 +135,12 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailContract.View {
         rvHomeSubstitues.layoutManager = LinearLayoutManager(this)
         rvAwaySubstitutes.adapter = MatchDetailAdapter(match.awaySubs?.split(";"), AWAY_STRING)
         rvAwaySubstitutes.layoutManager = LinearLayoutManager(this)
+        ivHomeTeam.setOnClickListener {
+            startActivity<TeamDetailActivity>(TeamDetailActivity.EXTRA_TEAM to match.homeTeamId)
+        }
+        ivAwayTeam.setOnClickListener {
+            startActivity<TeamDetailActivity>(TeamDetailActivity.EXTRA_TEAM to match.awayTeamId)
+        }
     }
 
     override fun onAddToFavorite() {

@@ -5,6 +5,8 @@ import com.dicoding.millatip.footballapps.data.repository.league.LeagueDataStore
 import com.dicoding.millatip.footballapps.data.repository.league.LeagueRepository
 import com.dicoding.millatip.footballapps.data.repository.match.MatchDataStore
 import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
+import com.dicoding.millatip.footballapps.data.repository.player.PlayerDataStore
+import com.dicoding.millatip.footballapps.data.repository.player.PlayerRepository
 import com.dicoding.millatip.footballapps.data.repository.team.TeamDataStore
 import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
 import com.dicoding.millatip.footballapps.presentation.ui.favoriteMatch.FavoriteMatchContract
@@ -69,6 +71,7 @@ val appModule = module {
     factory<MatchRepository> { MatchDataStore(get(), androidContext()) }
     factory<LeagueRepository> { LeagueDataStore(get(), androidContext()) }
     factory<TeamRepository> { TeamDataStore(get(), androidContext()) }
+    factory<PlayerRepository> { PlayerDataStore(get()) }
 
     factory { SplashPresenter<SplashContract.View>(get()) }
     factory { NextMatchPresenter<NextMatchContract.View>(get(), get()) }
