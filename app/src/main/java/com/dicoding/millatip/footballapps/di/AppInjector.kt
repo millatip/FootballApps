@@ -17,6 +17,12 @@ import com.dicoding.millatip.footballapps.presentation.ui.prevmatch.PrevMatchCon
 import com.dicoding.millatip.footballapps.presentation.ui.prevmatch.PrevMatchPresenter
 import com.dicoding.millatip.footballapps.presentation.ui.splash.SplashContract
 import com.dicoding.millatip.footballapps.presentation.ui.splash.SplashPresenter
+import com.dicoding.millatip.footballapps.presentation.ui.teamdetail.TeamDetailContract
+import com.dicoding.millatip.footballapps.presentation.ui.teamdetail.TeamDetailPresenter
+import com.dicoding.millatip.footballapps.presentation.ui.teamdetail.player.TeamPlayerContract
+import com.dicoding.millatip.footballapps.presentation.ui.teamdetail.player.TeamPlayerPresenter
+import com.dicoding.millatip.footballapps.presentation.ui.teamlist.TeamListContract
+import com.dicoding.millatip.footballapps.presentation.ui.teamlist.TeamListPresenter
 import com.dicoding.millatip.footballapps.utils.Constants
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -69,5 +75,8 @@ val appModule = module {
     factory { PrevMatchPresenter<PrevMatchContract.View>(get(), get()) }
     factory { MatchDetailPresenter<MatchDetailContract.View>(get(), get()) }
     factory { FavoriteMatchPresenter<FavoriteMatchContract.View>(get()) }
+    factory { TeamListPresenter<TeamListContract.View>(get(), get()) }
+    factory { TeamDetailPresenter<TeamDetailContract.View>(get()) }
+    factory { TeamPlayerPresenter<TeamPlayerContract.View>(get()) }
 }
 
