@@ -21,7 +21,7 @@ interface NetworkService {
     fun getMatchDetail(@Query("id") matchId: String): Deferred<Response<MatchResponse>>
 
     @GET("v1/json/1/lookup_all_teams.php")
-    fun getTeamList(@Query("id") leagueId: String) : Deferred<TeamResponse>
+    fun getTeamList(@Query("id") leagueId: String) : Deferred<Response<TeamResponse>>
 
     @GET("v1/json/1/lookupteam.php")
     fun getTeamDetail(@Query("id") teamId: String?): Deferred<TeamResponse>

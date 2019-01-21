@@ -3,14 +3,19 @@ package com.dicoding.millatip.footballapps.presentation.ui.teamlist
 import com.dicoding.millatip.footballapps.data.repository.league.LeagueRepository
 import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
 import com.dicoding.millatip.footballapps.presentation.base.BasePresenter
-import kotlinx.coroutines.Dispatchers
+import com.dicoding.millatip.footballapps.utils.CoroutineContextProvider
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class TeamListPresenter<V: TeamListContract.View>
-constructor(private val leagueRepository: LeagueRepository, private val teamRepository: TeamRepository) : BasePresenter<V>(), TeamListContract.UserInteractionListener<V>{
+class TeamListPresenter<V : TeamListContract.View>
+constructor(
+    private val leagueRepository: LeagueRepository,
+    private val teamRepository: TeamRepository,
+    private val context: CoroutineContextProvider = CoroutineContextProvider()
+) :
+    BasePresenter<V>(), TeamListContract.UserInteractionListener<V> {
     override fun getLeagueList() {
-        GlobalScope.launch(Dispatchers.Main){
+        GlobalScope.launch(context.main) {
             try {
                 val data = leagueRepository.getSoccerLeagueList()
                 view?.displayLeagueList(data)
@@ -22,14 +27,25 @@ constructor(private val leagueRepository: LeagueRepository, private val teamRepo
 
     override fun getTeamList() {
         view?.showLoading()
-        GlobalScope.launch(Dispatchers.Main){
+        GlobalScope.launch(context.main) {
+
             try {
                 val data = teamRepository.getTeamList(view?.selectedLeague?.leagueId.toString())
-                view?.displayTeamList(data)
-                view?.hideLoading()
+                if (data.isSuccessful) {
+                    if (data.code() == 200) {
+                        view?.displayTeamList(data.body()?.teams ?: mutableListOf())
+                        view?.hideLoading()
+                    } else {
+                        view?.hideLoading()
+                        view?.displayErrorMessage("Unable to load team data")
+                    }
+                } else {
+                    view?.hideLoading()
+                    view?.displayErrorMessage("Unable to load team data")
+                }
             } catch (e: Exception) {
                 view?.hideLoading()
-                view?.displayErrorMessage(e.message ?:"Unable to load team data")
+                view?.displayErrorMessage(e.message ?: "Unable to load team data")
             }
         }
     }
