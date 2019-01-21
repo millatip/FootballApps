@@ -1,17 +1,19 @@
 package com.dicoding.millatip.footballapps.presentation.ui.matchdetail
 
-import com.dicoding.millatip.footballapps.data.model.Match
+import com.dicoding.millatip.footballapps.data.model.MatchResponse
 import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
 import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
-import com.dicoding.millatip.footballapps.utils.Constants
 import com.dicoding.millatip.footballapps.utils.TestContextProvider
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.mockito.ArgumentMatchers
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
+import retrofit2.Response
 
 class MatchDetailPresenterTest {
     @Mock
@@ -20,13 +22,14 @@ class MatchDetailPresenterTest {
     private lateinit var teamRepository: TeamRepository
     @Mock
     private lateinit var view: MatchDetailContract.View
+    @Mock
+    private lateinit var matchResponse: Response<MatchResponse>
 
     private lateinit var presenter: MatchDetailPresenter<MatchDetailContract.View>
 
 
-
     @Before
-    fun setUp(){
+    fun setUp() {
         MockitoAnnotations.initMocks(this)
 
         presenter = MatchDetailPresenter(matchRepository, teamRepository, TestContextProvider())
@@ -34,22 +37,42 @@ class MatchDetailPresenterTest {
     }
 
     @Test
-    fun shouldDisplayMatchListWhenGetDataSuccess(){
-        val response = Match()
+    fun shouldDisplayMatchListWhenGetDataSuccess() {
+        val matchId = "3242"
 
         runBlocking {
-            Mockito.`when`(matchRepository.getMatchDetail(Constants.MATCH_ID))
-                .thenReturn(response)
-        }
+            `when`(matchRepository.getMatchDetail(matchId)).thenReturn(matchResponse)
+            `when`(matchResponse.isSuccessful).thenReturn(true)
 
-        presenter.getMatchDetail(Constants.MATCH_ID)
-        Mockito.verify(view).showLoading()
-        Mockito.verify(view).displayMatch(response, false)
-        Mockito.verify(view).hideLoading()
+            `when`(matchRepository.isFavorite(matchId)).thenReturn(false)
+
+            presenter.getMatchDetail(matchId)
+
+            verify(view).showLoading()
+            matchResponse.body()?.events?.get(0)?.let { verify(view).displayMatch(it, false) }
+            verify(view).hideLoading()
+
+        }
+    }
+
+    @Test
+    fun shouldDisplayError() {
+        val matchId = "1"
+
+        runBlocking {
+            `when`(matchRepository.getMatchDetail(matchId)).thenReturn(matchResponse)
+            `when`(matchResponse.isSuccessful).thenReturn(false)
+            `when`(matchRepository.isFavorite(matchId)).thenReturn(false)
+
+            presenter.getMatchDetail(matchId)
+            verify(view).showLoading()
+            verify(view).hideLoading()
+            verify(view).displayErrorMessage(ArgumentMatchers.anyString())
+        }
     }
 
     @After
-    fun tearDown(){
+    fun tearDown() {
         presenter.onDetach()
     }
 }

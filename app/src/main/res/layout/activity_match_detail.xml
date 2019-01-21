@@ -33,7 +33,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDateTimeDetail">
+                app:layout_constraintTop_toBottomOf="@+id/tvDateTimeDetail" android:baselineAligned="false">
             <android.support.constraint.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

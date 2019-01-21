@@ -34,8 +34,18 @@ constructor(
         GlobalScope.launch(context.main) {
             try {
                 val data = matchRepository.getNextMatch(leagueId.toString())
-                view?.displayMatchList(data)
-                view?.hideLoading()
+                if (data.isSuccessful) {
+                    if (data.code() == 200) {
+                        view?.displayMatchList(data.body()?.events ?: mutableListOf())
+                        view?.hideLoading()
+                    } else {
+                        view?.hideLoading()
+                        view?.displayErrorMessage("Unable to load match data")
+                    }
+                } else {
+                    view?.hideLoading()
+                    view?.displayErrorMessage("Unable to load match data")
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 view?.hideLoading()

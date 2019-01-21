@@ -30,12 +30,21 @@ constructor(
 
     override fun getMatchList() {
         view?.showLoading()
-        val leagueId = view?.selectedLeague?.leagueId
         GlobalScope.launch(context.main) {
             try {
-                val data = matchRepository.getPreviousMatch(leagueId.toString())
-                view?.displayMatchList(data)
-                view?.hideLoading()
+                val data = matchRepository.getPreviousMatch(view?.selectedLeague?.leagueId.toString())
+                if (data.isSuccessful) {
+                    if (data.code() == 200) {
+                        view?.displayMatchList(data.body()?.events ?: mutableListOf())
+                        view?.hideLoading()
+                    } else {
+                        view?.hideLoading()
+                        view?.displayErrorMessage("Unable to load match data")
+                    }
+                } else {
+                    view?.hideLoading()
+                    view?.displayErrorMessage("Unable to load match data")
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 view?.hideLoading()
