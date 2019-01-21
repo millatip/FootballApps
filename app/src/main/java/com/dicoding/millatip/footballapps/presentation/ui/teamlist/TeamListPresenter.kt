@@ -1,54 +1,51 @@
-package com.dicoding.millatip.footballapps.presentation.ui.prevmatch
+package com.dicoding.millatip.footballapps.presentation.ui.teamlist
 
 import com.dicoding.millatip.footballapps.data.repository.league.LeagueRepository
-import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
+import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
 import com.dicoding.millatip.footballapps.presentation.base.BasePresenter
 import com.dicoding.millatip.footballapps.utils.CoroutineContextProvider
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class PrevMatchPresenter<V : PrevMatchContract.View>
+class TeamListPresenter<V : TeamListContract.View>
 constructor(
-    private val matchRepository: MatchRepository,
     private val leagueRepository: LeagueRepository,
+    private val teamRepository: TeamRepository,
     private val context: CoroutineContextProvider = CoroutineContextProvider()
 ) :
-    BasePresenter<V>(), PrevMatchContract.UserActionListener<V> {
-
+    BasePresenter<V>(), TeamListContract.UserInteractionListener<V> {
     override fun getLeagueList() {
         GlobalScope.launch(context.main) {
             try {
                 val data = leagueRepository.getSoccerLeagueList()
                 view?.displayLeagueList(data)
             } catch (e: Exception) {
-                e.printStackTrace()
-                view?.hideLoading()
-                view?.displayErrorMessage("Failed to get data.")
+                view?.displayErrorMessage("Unable to load league data")
             }
         }
     }
 
-    override fun getMatchList() {
+    override fun getTeamList() {
         view?.showLoading()
         GlobalScope.launch(context.main) {
+
             try {
-                val data = matchRepository.getPreviousMatch(view?.selectedLeague?.leagueId.toString())
+                val data = teamRepository.getTeamList(view?.selectedLeague?.leagueId.toString())
                 if (data.isSuccessful) {
                     if (data.code() == 200) {
-                        view?.displayMatchList(data.body()?.events ?: mutableListOf())
+                        view?.displayTeamList(data.body()?.teams ?: mutableListOf())
                         view?.hideLoading()
                     } else {
                         view?.hideLoading()
-                        view?.displayErrorMessage("Unable to load match data")
+                        view?.displayErrorMessage("Unable to load team data")
                     }
                 } else {
                     view?.hideLoading()
-                    view?.displayErrorMessage("Unable to load match data")
+                    view?.displayErrorMessage("Unable to load team data")
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
                 view?.hideLoading()
-                view?.displayErrorMessage("Failed to get data")
+                view?.displayErrorMessage(e.message ?: "Unable to load team data")
             }
         }
     }

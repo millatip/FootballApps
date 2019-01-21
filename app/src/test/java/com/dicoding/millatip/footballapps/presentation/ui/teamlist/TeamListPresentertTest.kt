@@ -1,9 +1,9 @@
-package com.dicoding.millatip.footballapps.presentation.ui.prevmatch
+package com.dicoding.millatip.footballapps.presentation.ui.teamlist
 
 import com.dicoding.millatip.footballapps.data.model.League
-import com.dicoding.millatip.footballapps.data.model.MatchResponse
+import com.dicoding.millatip.footballapps.data.model.TeamResponse
 import com.dicoding.millatip.footballapps.data.repository.league.LeagueRepository
-import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
+import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
 import com.dicoding.millatip.footballapps.utils.Constants
 import com.dicoding.millatip.footballapps.utils.TestContextProvider
 import kotlinx.coroutines.runBlocking
@@ -18,61 +18,60 @@ import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import retrofit2.Response
 
-class PrevMatchPresenterTest {
+class TeamListPresentertTest {
 
     @Mock
-    private lateinit var matchRepository: MatchRepository
+    private lateinit var teamRepository: TeamRepository
 
     @Mock
     private lateinit var leagueRepository: LeagueRepository
 
     @Mock
-    private lateinit var view: PrevMatchContract.View
+    private lateinit var view: TeamListContract.View
 
     @Mock
-    private lateinit var matchResponse: Response<MatchResponse>
+    private lateinit var teamResponse: Response<TeamResponse>
 
     private lateinit var leagueMock: League
 
-    private lateinit var presenter: PrevMatchPresenter<PrevMatchContract.View>
+    private lateinit var presenter: TeamListPresenter<TeamListContract.View>
 
     @Before
-    fun setUp() {
+    fun setUp(){
         MockitoAnnotations.initMocks(this)
 
-        presenter = PrevMatchPresenter(matchRepository, leagueRepository, TestContextProvider())
+        presenter = TeamListPresenter(leagueRepository, teamRepository, TestContextProvider())
         presenter.onAttach(view)
 
         leagueMock = League(leagueId = Constants.LEAGUE_ID)
     }
 
     @Test
-    fun shouldDisplayMatchListWhenGetDataSuccess() {
-
+    fun shouldDisplayTeamListWhenGetDataSuccess(){
         Mockito.`when`(view.selectedLeague).thenReturn(leagueMock)
 
         runBlocking {
-            `when`(matchRepository.getPreviousMatch(Constants.LEAGUE_ID)).thenReturn(matchResponse)
-            `when`(matchResponse.isSuccessful).thenReturn(true)
-            `when`(matchResponse.code()).thenReturn(200)
+            `when`(teamRepository.getTeamList(Constants.LEAGUE_ID)).thenReturn(teamResponse)
+            `when`(teamResponse.isSuccessful).thenReturn(true)
+            `when`(teamResponse.code()).thenReturn(200)
 
-            presenter.getMatchList()
+            presenter.getTeamList()
 
             Mockito.verify(view).showLoading()
-            Mockito.verify(view).displayMatchList(matchResponse.body()?.events ?: mutableListOf())
+            Mockito.verify(view).displayTeamList(teamResponse.body()?.teams ?: mutableListOf())
             Mockito.verify(view).hideLoading()
         }
     }
 
     @Test
-    fun shouldDisplayErrorWhenDetDataFailed() {
+    fun shouldDisplayErrorWhenGetDataFailed(){
         `when`(view.selectedLeague).thenReturn(leagueMock)
 
         runBlocking {
-            `when`(matchRepository.getPreviousMatch(Constants.LEAGUE_ID)).thenReturn(matchResponse)
-            `when`(matchResponse.isSuccessful).thenReturn(false)
+            `when`(teamRepository.getTeamList(Constants.LEAGUE_ID)).thenReturn(teamResponse)
+            `when`(teamResponse.isSuccessful).thenReturn(false)
 
-            presenter.getMatchList()
+            presenter.getTeamList()
 
             verify(view).showLoading()
             verify(view).hideLoading()

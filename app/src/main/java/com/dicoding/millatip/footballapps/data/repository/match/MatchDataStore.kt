@@ -4,11 +4,13 @@ import android.content.Context
 import com.dicoding.millatip.footballapps.data.database.database
 import com.dicoding.millatip.footballapps.data.model.FavoriteMatch
 import com.dicoding.millatip.footballapps.data.model.Match
+import com.dicoding.millatip.footballapps.data.model.MatchResponse
 import com.dicoding.millatip.footballapps.data.network.NetworkService
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
+import retrofit2.Response
 
 class MatchDataStore
 constructor(private val networkService: NetworkService, val context: Context) : MatchRepository {
@@ -57,16 +59,16 @@ constructor(private val networkService: NetworkService, val context: Context) : 
         }
     }
 
-    override suspend fun getMatchDetail(matchId: String): Match {
-        return networkService.getMatchDetail(matchId).await().events[0]
+    override suspend fun getMatchDetail(matchId: String): Response <MatchResponse> {
+        return networkService.getMatchDetail(matchId).await()
     }
 
-    override suspend fun getNextMatch(leagueId: String): List<Match> {
-        return networkService.getNextMatch(leagueId).await().events
+    override suspend fun getNextMatch(leagueId: String): Response<MatchResponse> {
+        return networkService.getNextMatch(leagueId).await()
     }
 
-    override suspend fun getPreviousMatch(leagueId: String): List<Match> {
-        return networkService.getPreviousMatch(leagueId).await().events
+    override suspend fun getPreviousMatch(leagueId: String): Response<MatchResponse> {
+        return networkService.getPreviousMatch(leagueId).await()
     }
 
 }

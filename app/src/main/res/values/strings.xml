@@ -18,5 +18,7 @@
     <string name="lineups">Lineups</string>
     <string name="favorite">Favorite</string>
     <string name="favorites">Favorites</string>
+    <string name="team_name">Team Name</string>
+    <string name="teams">Teams</string>
 
 </resources>

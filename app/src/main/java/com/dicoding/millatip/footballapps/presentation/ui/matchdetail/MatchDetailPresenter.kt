@@ -21,8 +21,21 @@ constructor(
             try {
                 val data = matchRepository.getMatchDetail(matchId)
                 val favorite = matchRepository.isFavorite(matchId)
-                view?.displayMatch(data, favorite)
-                view?.hideLoading()
+
+                if (data.isSuccessful) {
+                    if (data.code() == 200){
+                        data.body()?.events?.get(0)?.let {
+                            view?.displayMatch(it, favorite)
+                            view?.hideLoading()
+                        }
+                    }else{
+                        view?.hideLoading()
+                        view?.displayErrorMessage("Get data failed. Check your internet connection")
+                    }
+                } else {
+                    view?.hideLoading()
+                    view?.displayErrorMessage("Get data failed. Check your internet connection")
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 view?.hideLoading()
@@ -35,7 +48,22 @@ constructor(
         GlobalScope.launch(context.main) {
             try {
                 val data = teamRepository.getTeamDetail(teamId)
-                view?.displayHomeBadge(data.teamBadge)
+                if (data.isSuccessful) {
+                    if (data.code() == 200){
+                        data.body()?.teams?.get(0)?.let {
+                            view?.displayHomeBadge(it.teamBadge)
+                            view?.hideLoading()
+                        }
+                    }else{
+                        view?.hideLoading()
+
+                        view?.displayErrorMessage("Get data failed. Check your internet connection")
+                    }
+                } else {
+                    view?.hideLoading()
+
+                    view?.displayErrorMessage("Get data failed. Check your internet connection")
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -46,7 +74,22 @@ constructor(
         GlobalScope.launch(context.main) {
             try {
                 val data = teamRepository.getTeamDetail(teamId)
-                view?.displayAwayBadge(data.teamBadge)
+                if (data.isSuccessful) {
+                    if (data.code() == 200){
+                        data.body()?.teams?.get(0)?.let {
+                            view?.displayAwayBadge(it.teamBadge)
+                            view?.hideLoading()
+                        }
+                    }else{
+                        view?.hideLoading()
+
+                        view?.displayErrorMessage("Get data failed. Check your internet connection")
+                    }
+                } else {
+                    view?.hideLoading()
+
+                    view?.displayErrorMessage("Get data failed. Check your internet connection")
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
