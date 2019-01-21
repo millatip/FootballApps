@@ -15,7 +15,7 @@ constructor(
         return networkService.getTeamList(leagueId).await()
     }
 
-    override suspend fun getTeamDetail(teamId: String?): Team {
-        return networkService.getTeamDetail(teamId).await().teams[0]
+    override suspend fun getTeamDetail(teamId: String?): Response<TeamResponse> {
+        return networkService.getTeamDetail(teamId).await()
     }
 }

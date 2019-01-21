@@ -6,5 +6,5 @@ import retrofit2.Response
 
 interface TeamRepository {
     suspend fun getTeamList(leagueId: String) : Response<TeamResponse>
-    suspend fun getTeamDetail(teamId: String?): Team
+    suspend fun getTeamDetail(teamId: String?): Response<TeamResponse>
 }
