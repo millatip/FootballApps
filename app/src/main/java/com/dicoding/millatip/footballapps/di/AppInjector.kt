@@ -9,8 +9,10 @@ import com.dicoding.millatip.footballapps.data.repository.player.PlayerDataStore
 import com.dicoding.millatip.footballapps.data.repository.player.PlayerRepository
 import com.dicoding.millatip.footballapps.data.repository.team.TeamDataStore
 import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
-import com.dicoding.millatip.footballapps.presentation.ui.favoriteMatch.FavoriteMatchContract
-import com.dicoding.millatip.footballapps.presentation.ui.favoriteMatch.FavoriteMatchPresenter
+import com.dicoding.millatip.footballapps.presentation.ui.favoritematch.FavoriteMatchContract
+import com.dicoding.millatip.footballapps.presentation.ui.favoritematch.FavoriteMatchPresenter
+import com.dicoding.millatip.footballapps.presentation.ui.favoriteteam.FavoriteTeamContract
+import com.dicoding.millatip.footballapps.presentation.ui.favoriteteam.FavoriteTeamPresenter
 import com.dicoding.millatip.footballapps.presentation.ui.matchdetail.MatchDetailContract
 import com.dicoding.millatip.footballapps.presentation.ui.matchdetail.MatchDetailPresenter
 import com.dicoding.millatip.footballapps.presentation.ui.nextmatch.NextMatchContract
@@ -81,5 +83,6 @@ val appModule = module {
     factory { TeamListPresenter<TeamListContract.View>(get(), get()) }
     factory { TeamDetailPresenter<TeamDetailContract.View>(get()) }
     factory { TeamPlayerPresenter<TeamPlayerContract.View>(get()) }
+    factory { FavoriteTeamPresenter<FavoriteTeamContract.View>(get())}
 }
 
