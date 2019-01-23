@@ -1,5 +1,6 @@
 package com.dicoding.millatip.footballapps.presentation.ui.teamdetail
 
+import com.dicoding.millatip.footballapps.data.model.Team
 import com.dicoding.millatip.footballapps.data.model.TeamResponse
 import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
 import com.dicoding.millatip.footballapps.utils.TestContextProvider
@@ -64,6 +65,25 @@ class TeamDetailPresenterTest {
             Mockito.verify(view).hideLoading()
             Mockito.verify(view).displayErrorMessage(ArgumentMatchers.anyString())
         }
+    }
+
+    @Test
+    fun shouldSaveFavoriteTeamData(){
+        val team = Team(teamId = "133604", teamName = "Arsenal", teamBadge = "www.thesportsdb.com/images/media/team/badge/vrtrtp1448813175.png"  )
+
+        presenter.addToFavorite(team)
+        verify(view).onAddToFavorite()
+
+    }
+
+    @Test
+    fun shouldRemoveFavoriteTeamData(){
+        val team = Team(
+            teamId = "133604"
+        )
+
+        presenter.removeFromFavorite(team)
+        verify(view).onRemoveFromFavorite()
     }
 
     @After

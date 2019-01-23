@@ -1,5 +1,6 @@
 package com.dicoding.millatip.footballapps.presentation.ui.matchdetail
 
+import com.dicoding.millatip.footballapps.data.model.Match
 import com.dicoding.millatip.footballapps.data.model.MatchResponse
 import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
 import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
@@ -45,14 +46,37 @@ class MatchDetailPresenterTest {
             `when`(matchResponse.isSuccessful).thenReturn(true)
 
             `when`(matchRepository.isFavorite(matchId)).thenReturn(false)
-
             presenter.getMatchDetail(matchId)
 
             verify(view).showLoading()
             matchResponse.body()?.events?.get(0)?.let { verify(view).displayMatch(it, false) }
             verify(view).hideLoading()
-
         }
+    }
+
+    @Test
+    fun shouldSaveFavoriteMatchData() {
+        val match = Match(
+            matchId = "441613", matchName = "Liverpool vs Swansea",
+            league = "English Premier League", homeTeamId = "133602",
+            homeTeamName = "Liverpool", awayTeamId = "133614",
+            awayTeamName = "Swansea", matchDate = "29/12/14", matchTime = "20:00:00+00:00",
+            homeScore = "4", awayScore = "1"
+        )
+
+        presenter.addToFavorite(match)
+        verify(view).onAddToFavorite()
+
+    }
+
+    @Test
+    fun shouldRemoveFavoriteMatchData() {
+        val match = Match(
+            matchId = "441613"
+        )
+
+        presenter.removeFromFavorite(match)
+
     }
 
     @Test
