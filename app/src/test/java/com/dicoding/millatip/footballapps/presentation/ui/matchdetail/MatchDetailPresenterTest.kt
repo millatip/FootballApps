@@ -76,7 +76,7 @@ class MatchDetailPresenterTest {
         )
 
         presenter.removeFromFavorite(match)
-
+        verify(view).onRemoveFromFavorite()
     }
 
     @Test
