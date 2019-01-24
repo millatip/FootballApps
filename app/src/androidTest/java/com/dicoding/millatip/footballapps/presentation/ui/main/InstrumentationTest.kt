@@ -2,6 +2,7 @@ package com.dicoding.millatip.footballapps.presentation.ui.main
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.Espresso.pressBack
+import android.support.test.espresso.IdlingRegistry
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.contrib.RecyclerViewActions
@@ -10,6 +11,9 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
 import com.dicoding.millatip.footballapps.R.id.*
+import com.dicoding.millatip.footballapps.utils.EspressoIdlingResource
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,9 +24,13 @@ class InstrumentationTest {
     @Rule
     @JvmField var activityRule = ActivityTestRule(MainActivity::class.java)
 
+    @Before
+    fun setUp(){
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
+    }
+
     @Test
     fun testAppBehaviour(){
-        Thread.sleep(2500)
 
         onView(withId(rvPrevMatch)).check(matches(isDisplayed()))
         onView(withId(rvPrevMatch)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(6))
@@ -30,7 +38,7 @@ class InstrumentationTest {
 
         onView(withId(add_to_fav)).check(matches(isDisplayed()))
         onView(withId(add_to_fav)).perform(click())
-        Thread.sleep(3000)
+        onView(withText("Added to favorite")).check(matches(isDisplayed()))
         pressBack()
 
         onView(withId(bottomNavigationView)).check(matches(isDisplayed()))
@@ -44,5 +52,10 @@ class InstrumentationTest {
         onView(withId(add_to_fav)).check(matches(isDisplayed()))
         onView(withId(add_to_fav)).perform(click())
         onView(withText("Removed from favorite")).check(matches(isDisplayed()))
+    }
+
+    @After
+    fun tearDown(){
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResource)
     }
 }
