@@ -3,6 +3,7 @@ package com.dicoding.millatip.footballapps.data.database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import com.dicoding.millatip.footballapps.data.model.FavoriteMatch
+import com.dicoding.millatip.footballapps.data.model.FavoriteTeam
 import com.dicoding.millatip.footballapps.data.model.League
 import org.jetbrains.anko.db.*
 
@@ -43,11 +44,19 @@ class MyDatabaseOpenHelper(context: Context) : ManagedSQLiteOpenHelper(context, 
             League.LEAGUE_NAME to TEXT,
             League.LEAGUE_SPORT to TEXT
         )
+
+        db.createTable(
+            FavoriteTeam.TABLE_TEAM_FAVORITE, true,
+            FavoriteTeam.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+            FavoriteTeam.TEAM_ID to TEXT + UNIQUE,
+            FavoriteTeam.TEAM_NAME to TEXT,
+            FavoriteTeam.TEAM_BADGE to TEXT)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.dropTable(FavoriteMatch.TABLE_MATCH_FAVORITE, true)
         db.dropTable(League.TABLE_LEAGUE, true)
+        db.dropTable(FavoriteTeam.TABLE_TEAM_FAVORITE, true)
     }
 
 }

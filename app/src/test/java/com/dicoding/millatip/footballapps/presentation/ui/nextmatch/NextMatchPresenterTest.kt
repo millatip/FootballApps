@@ -1,7 +1,6 @@
 package com.dicoding.millatip.footballapps.presentation.ui.nextmatch
 
 import com.dicoding.millatip.footballapps.data.model.League
-import com.dicoding.millatip.footballapps.data.model.Match
 import com.dicoding.millatip.footballapps.data.model.MatchResponse
 import com.dicoding.millatip.footballapps.data.repository.league.LeagueRepository
 import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository

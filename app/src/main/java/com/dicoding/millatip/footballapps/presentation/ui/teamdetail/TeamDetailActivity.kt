@@ -1,8 +1,11 @@
 package com.dicoding.millatip.footballapps.presentation.ui.teamdetail
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import com.bumptech.glide.Glide
 import com.dicoding.millatip.footballapps.R
 import com.dicoding.millatip.footballapps.data.model.Team
@@ -20,6 +23,8 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailContract.View {
     val presenter: TeamDetailPresenter<TeamDetailContract.View> by inject()
 
     private lateinit var team: Team
+    private var menuItem: Menu? = null
+    private var isFavorite: Boolean = false
 
     companion object {
         const val EXTRA_TEAM = "teamId"
@@ -31,6 +36,47 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailContract.View {
         onAttachView()
         setupViewPager(viewPagerTeam)
         tabLayoutTeam.setupWithViewPager(viewPagerTeam)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        menuItem = menu
+
+        return true
+    }
+
+    override fun displayFavoriteStatus(favorite: Boolean) {
+        isFavorite = favorite
+        if (isFavorite) menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_fav)
+        else menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_add_to_fav)
+    }
+
+    override fun onAddToFavorite() {
+        pbTeamDetail.snackbar("Added to Favorite")
+    }
+
+    override fun onRemoveFromFavorite() {
+        pbTeamDetail.snackbar("Removed from Favorite")
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            android.R.id.home ->{
+                finish()
+                true
+            }
+            R.id.add_to_fav ->{
+                if (isFavorite) presenter.removeFromFavorite(team)
+                else presenter.addToFavorite(team)
+
+                isFavorite = !isFavorite
+                displayFavoriteStatus(isFavorite)
+
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onResume() {

@@ -1,4 +1,4 @@
-package com.dicoding.millatip.footballapps.presentation.ui.favoriteMatch
+package com.dicoding.millatip.footballapps.presentation.ui.favoritematches
 
 
 import android.os.Bundle
@@ -20,7 +20,8 @@ import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.startActivity
 import org.koin.android.ext.android.inject
 
-class FavoriteMatchFragment : Fragment(), FavoriteMatchContract.View {
+class FavoriteMatchFragment : Fragment(),
+    FavoriteMatchContract.View {
 
     private val presenter: FavoriteMatchPresenter<FavoriteMatchContract.View> by inject()
 
@@ -49,6 +50,7 @@ class FavoriteMatchFragment : Fragment(), FavoriteMatchContract.View {
 
     }
 
+
     override fun showLoading() {
         pbFavoriteMatch.show()
     }
@@ -60,13 +62,14 @@ class FavoriteMatchFragment : Fragment(), FavoriteMatchContract.View {
     override fun displayFavoriteMatchList(matchList: List<FavoriteMatch>) {
         swipeRefreshLayout.isRefreshing = false
 
-        val adapter = FavoriteMatchAdapter(matchList){
-            startActivity<MatchDetailActivity>(
-                MatchDetailActivity.EXTRA_MATCH_ID to it.matchId,
-                MatchDetailActivity.EXTRA_HOME_TEAM_ID to it.homeTeamId,
-                MatchDetailActivity.EXTRA_AWAY_TEAM_ID to it.awayTeamId
-            )
-        }
+        val adapter =
+            FavoriteMatchAdapter(matchList) {
+                startActivity<MatchDetailActivity>(
+                    MatchDetailActivity.EXTRA_MATCH_ID to it.matchId,
+                    MatchDetailActivity.EXTRA_HOME_TEAM_ID to it.homeTeamId,
+                    MatchDetailActivity.EXTRA_AWAY_TEAM_ID to it.awayTeamId
+                )
+            }
 
         rvFavoriteMatch.adapter = adapter
         rvFavoriteMatch.layoutManager = LinearLayoutManager(context)
