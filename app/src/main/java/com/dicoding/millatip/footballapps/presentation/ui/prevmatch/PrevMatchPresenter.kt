@@ -17,10 +17,15 @@ constructor(
     BasePresenter<V>(), PrevMatchContract.UserActionListener<V> {
 
     override fun getLeagueList() {
+        EspressoIdlingResource.increment()
         GlobalScope.launch(context.main) {
             try {
                 val data = leagueRepository.getSoccerLeagueList()
                 view?.displayLeagueList(data)
+                view?.hideLoading()
+                if (!EspressoIdlingResource.idlingResource.isIdleNow){
+                    EspressoIdlingResource.decrement()
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 view?.hideLoading()

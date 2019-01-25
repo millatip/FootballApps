@@ -1,11 +1,7 @@
 package com.dicoding.millatip.footballapps.presentation.ui.favoriteteam
 
-import com.dicoding.millatip.footballapps.data.model.FavoriteMatch
 import com.dicoding.millatip.footballapps.data.model.FavoriteTeam
-import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
 import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
-import com.dicoding.millatip.footballapps.presentation.ui.favoritematches.FavoriteMatchContract
-import com.dicoding.millatip.footballapps.presentation.ui.favoritematches.FavoriteMatchPresenter
 import com.dicoding.millatip.footballapps.utils.TestContextProvider
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -13,10 +9,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
-import java.lang.Error
-import java.lang.Exception
 
 class FavoriteTeamPresenterTest {
 
