@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.dicoding.millatip.footballapps.R
-import com.dicoding.millatip.footballapps.presentation.ui.favoritematch.FavoriteMatchFragment
+import com.dicoding.millatip.footballapps.presentation.ui.favoritematches.FavoriteMatchFragment
 import com.dicoding.millatip.footballapps.presentation.ui.favoriteteam.FavoriteTeamFragment
 import com.dicoding.millatip.footballapps.utils.ViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_favorite.*

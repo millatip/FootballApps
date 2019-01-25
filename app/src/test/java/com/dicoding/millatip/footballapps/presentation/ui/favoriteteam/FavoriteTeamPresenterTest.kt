@@ -4,8 +4,8 @@ import com.dicoding.millatip.footballapps.data.model.FavoriteMatch
 import com.dicoding.millatip.footballapps.data.model.FavoriteTeam
 import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
 import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
-import com.dicoding.millatip.footballapps.presentation.ui.favoritematch.FavoriteMatchContract
-import com.dicoding.millatip.footballapps.presentation.ui.favoritematch.FavoriteMatchPresenter
+import com.dicoding.millatip.footballapps.presentation.ui.favoritematches.FavoriteMatchContract
+import com.dicoding.millatip.footballapps.presentation.ui.favoritematches.FavoriteMatchPresenter
 import com.dicoding.millatip.footballapps.utils.TestContextProvider
 import kotlinx.coroutines.runBlocking
 import org.junit.After

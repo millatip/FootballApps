@@ -3,6 +3,8 @@ package com.dicoding.millatip.footballapps.presentation.ui.favoritematch
 import com.dicoding.millatip.footballapps.data.model.FavoriteMatch
 import com.dicoding.millatip.footballapps.data.model.Match
 import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
+import com.dicoding.millatip.footballapps.presentation.ui.favoritematches.FavoriteMatchContract
+import com.dicoding.millatip.footballapps.presentation.ui.favoritematches.FavoriteMatchPresenter
 import com.dicoding.millatip.footballapps.presentation.ui.prevmatch.PrevMatchContract
 import com.dicoding.millatip.footballapps.utils.TestContextProvider
 import kotlinx.coroutines.runBlocking
@@ -31,7 +33,10 @@ class FavoriteMatchPresenterTest {
     fun setUp(){
         MockitoAnnotations.initMocks(this)
 
-        presenter = FavoriteMatchPresenter(matchRepository, TestContextProvider())
+        presenter = FavoriteMatchPresenter(
+            matchRepository,
+            TestContextProvider()
+        )
         presenter.onAttach(view)
     }
 

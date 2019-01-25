@@ -1,4 +1,4 @@
-package com.dicoding.millatip.footballapps.presentation.ui.favoritematch
+package com.dicoding.millatip.footballapps.presentation.ui.favoritematches
 
 import com.dicoding.millatip.footballapps.data.model.FavoriteMatch
 import com.dicoding.millatip.footballapps.presentation.base.BaseView

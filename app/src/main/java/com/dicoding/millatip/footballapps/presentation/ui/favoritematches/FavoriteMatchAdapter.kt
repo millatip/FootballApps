@@ -1,4 +1,4 @@
-package com.dicoding.millatip.footballapps.presentation.ui.favoritematch
+package com.dicoding.millatip.footballapps.presentation.ui.favoritematches
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
