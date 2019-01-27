@@ -15,6 +15,16 @@ constructor(
     private val context: CoroutineContextProvider = CoroutineContextProvider()
 ) :
     BasePresenter<V>(), TeamListContract.UserInteractionListener<V> {
+
+    override fun searchTeam(teamName: String) {
+        GlobalScope.launch ( context.main ){
+            val data = teamRepository.getTeamSearchResult(view?.selectedLeague?.leagueId.toString())
+            view?.showLoading()
+            view?.displayTeamList(data.body()?.teams ?: mutableListOf())
+            view?.hideLoading()
+        }
+    }
+
     override fun getLeagueList() {
         GlobalScope.launch(context.main) {
             try {
@@ -27,7 +37,7 @@ constructor(
     }
 
     override fun getTeamList() {
-        EspressoIdlingResource.increment()
+
         view?.showLoading()
         GlobalScope.launch(context.main) {
 
@@ -37,9 +47,6 @@ constructor(
                     if (data.code() == 200) {
                         view?.displayTeamList(data.body()?.teams ?: mutableListOf())
                         view?.hideLoading()
-                        if (!EspressoIdlingResource.idlingResource.isIdleNow){
-                            EspressoIdlingResource.decrement()
-                        }
                     } else {
                         view?.hideLoading()
                         view?.displayErrorMessage("Unable to load team data")

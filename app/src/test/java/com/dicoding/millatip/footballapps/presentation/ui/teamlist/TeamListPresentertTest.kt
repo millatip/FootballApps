@@ -1,5 +1,6 @@
 package com.dicoding.millatip.footballapps.presentation.ui.teamlist
 
+import android.support.test.espresso.IdlingResource
 import com.dicoding.millatip.footballapps.data.model.League
 import com.dicoding.millatip.footballapps.data.model.TeamResponse
 import com.dicoding.millatip.footballapps.data.repository.league.LeagueRepository
@@ -18,7 +19,7 @@ import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import retrofit2.Response
 
-class TeamListPresentertTest {
+class TeamListPresenterTest {
 
     @Mock
     private lateinit var teamRepository: TeamRepository
@@ -32,12 +33,15 @@ class TeamListPresentertTest {
     @Mock
     private lateinit var teamResponse: Response<TeamResponse>
 
+    @Mock
+    private lateinit var idlingResource: IdlingResource
+
     private lateinit var leagueMock: League
 
     private lateinit var presenter: TeamListPresenter<TeamListContract.View>
 
     @Before
-    fun setUp(){
+    fun setUp() {
         MockitoAnnotations.initMocks(this)
 
         presenter = TeamListPresenter(leagueRepository, teamRepository, TestContextProvider())
@@ -47,11 +51,10 @@ class TeamListPresentertTest {
     }
 
     @Test
-    fun shouldDisplayTeamListWhenGetDataSuccess(){
+    fun shouldDisplayTeamListWhenGetDataSuccess() {
         Mockito.`when`(view.selectedLeague).thenReturn(leagueMock)
-
         runBlocking {
-            `when`(teamRepository.getTeamList(Constants.LEAGUE_ID)).thenReturn(teamResponse)
+            `when`(teamRepository.getTeamList("4328")).thenReturn(teamResponse)
             `when`(teamResponse.isSuccessful).thenReturn(true)
             `when`(teamResponse.code()).thenReturn(200)
 
@@ -64,7 +67,7 @@ class TeamListPresentertTest {
     }
 
     @Test
-    fun shouldDisplayErrorWhenGetDataFailed(){
+    fun shouldDisplayErrorWhenGetDataFailed() {
         `when`(view.selectedLeague).thenReturn(leagueMock)
 
         runBlocking {
@@ -73,6 +76,29 @@ class TeamListPresentertTest {
 
             presenter.getTeamList()
 
+            verify(view).showLoading()
+            verify(view).hideLoading()
+            verify(view).displayErrorMessage(ArgumentMatchers.anyString())
+        }
+    }
+
+    @Test
+    fun shouldDisplayTeamListWhenSearchTeamSuccess() {
+        runBlocking {
+            `when`(teamRepository.getTeamSearchResult("Arsenal")).thenReturn(teamResponse)
+            presenter.searchTeam("Arsenal")
+            verify(view).displayTeamList(teamResponse.body()?.teams ?: mutableListOf())
+            verify(view).showLoading()
+            verify(view).hideLoading()
+        }
+    }
+
+    @Test
+    fun shouldDisplayErrorWhenSearchTeamFailed() {
+        val teamName = "1"
+        runBlocking {
+            `when`(teamRepository.getTeamSearchResult(teamName)).thenReturn(teamResponse)
+            presenter.searchTeam(teamName)
             verify(view).showLoading()
             verify(view).hideLoading()
             verify(view).displayErrorMessage(ArgumentMatchers.anyString())

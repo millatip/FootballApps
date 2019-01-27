@@ -14,6 +14,7 @@ import com.dicoding.millatip.footballapps.R
 import com.dicoding.millatip.footballapps.data.model.League
 import com.dicoding.millatip.footballapps.data.model.Team
 import com.dicoding.millatip.footballapps.presentation.ui.teamdetail.TeamDetailActivity
+import com.dicoding.millatip.footballapps.utils.EspressoIdlingResource
 import com.dicoding.millatip.footballapps.utils.hide
 import com.dicoding.millatip.footballapps.utils.show
 import kotlinx.android.synthetic.main.fragment_team_list.*
@@ -46,6 +47,7 @@ class TeamListFragment : Fragment(), TeamListContract.View {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 selectedLeague = parent?.getItemAtPosition(position) as League
+                EspressoIdlingResource.increment()
                 presenter.getTeamList()
             }
         }
@@ -61,6 +63,9 @@ class TeamListFragment : Fragment(), TeamListContract.View {
     }
 
     override fun displayTeamList(teams: List<Team>) {
+        if (!EspressoIdlingResource.idlingResource.isIdleNow){
+            EspressoIdlingResource.decrement()
+        }
         rvTeamList.adapter = TeamAdapter(requireContext(), teams) {
             startActivity<TeamDetailActivity>(TeamDetailActivity.EXTRA_TEAM to it.teamId)
         }
