@@ -13,5 +13,5 @@ interface MatchRepository {
     suspend fun isFavorite(matchId: String): Boolean
     fun addToFavorite(match: Match)
     fun removeFromFavorite(matchId: String)
-    suspend fun getMatchSearchResult(matchName: String): List<Match>
+    suspend fun getMatchSearchResult(matchName: String): Response<MatchResponse>
 }
