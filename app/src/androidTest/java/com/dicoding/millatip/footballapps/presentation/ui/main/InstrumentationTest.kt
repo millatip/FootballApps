@@ -33,6 +33,11 @@ class InstrumentationTest {
     fun testAppBehaviour(){
 
         onView(withId(rvPrevMatch)).check(matches(isDisplayed()))
+        onView(withId(action_search)).check(matches(isDisplayed()))
+        onView(withId(action_search)).perform(click())
+        onView(withText("isOpened")).check(matches(isDisplayed()))
+        pressBack()
+        onView(withId(rvPrevMatch)).check(matches(isDisplayed()))
         onView(withId(rvPrevMatch)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(6))
         onView(withId(rvPrevMatch)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(6, click()))
 
@@ -52,6 +57,14 @@ class InstrumentationTest {
         onView(withId(add_to_fav)).check(matches(isDisplayed()))
         onView(withId(add_to_fav)).perform(click())
         onView(withText("Removed from favorite")).check(matches(isDisplayed()))
+        pressBack()
+
+        onView(withId(bottomNavigationView)).check(matches(isDisplayed()))
+        onView(withId(action_team)).check(matches(isDisplayed()))
+        onView(withId(action_team)).perform(click())
+        onView(withId(action_search)).check(matches(isDisplayed()))
+        onView(withId(action_search)).perform(click()).check(matches(isDisplayed()))
+        onView(withText("Search team..."))
     }
 
     @After

@@ -3,12 +3,12 @@ package com.dicoding.millatip.footballapps.presentation.ui.teamlist
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.SearchView
 
 import com.dicoding.millatip.footballapps.R
 import com.dicoding.millatip.footballapps.data.model.League
@@ -40,7 +40,7 @@ class TeamListFragment : Fragment(), TeamListContract.View {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         onAttachView()
-
+        setHasOptionsMenu(true)
         spTeamList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
@@ -52,6 +52,14 @@ class TeamListFragment : Fragment(), TeamListContract.View {
             }
         }
         presenter.getLeagueList()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_search, menu)
+
+        val searchView = MenuItemCompat.getActionView(menu.findItem(R.id.action_search)) as SearchView
+        searchView.queryHint = "Search team..."
     }
 
     override fun showLoading() {

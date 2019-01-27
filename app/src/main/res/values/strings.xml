@@ -20,5 +20,7 @@
     <string name="favorites">Favorites</string>
     <string name="team_name">Team Name</string>
     <string name="teams">Teams</string>
+    <string name="is_opened">isOpened</string>
+    <string name="search">Search</string>
 
 </resources>
