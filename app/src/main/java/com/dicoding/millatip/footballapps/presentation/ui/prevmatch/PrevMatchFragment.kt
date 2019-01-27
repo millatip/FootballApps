@@ -17,6 +17,7 @@ import com.dicoding.millatip.footballapps.R
 import com.dicoding.millatip.footballapps.data.model.League
 import com.dicoding.millatip.footballapps.data.model.Match
 import com.dicoding.millatip.footballapps.presentation.ui.matchdetail.MatchDetailActivity
+import com.dicoding.millatip.footballapps.utils.EspressoIdlingResource
 import com.dicoding.millatip.footballapps.utils.hide
 import com.dicoding.millatip.footballapps.utils.show
 import kotlinx.android.synthetic.main.fragment_prev_match.*
@@ -63,6 +64,7 @@ class PrevMatchFragment : Fragment(), PrevMatchContract.View {
 
         swipeRefreshLayout.onRefresh {
             if (isNetworkAvailable(context)) {
+                EspressoIdlingResource.increment()
                 presenter.getMatchList()
             } else {
                 swipeRefreshLayout.isRefreshing = false
@@ -76,11 +78,12 @@ class PrevMatchFragment : Fragment(), PrevMatchContract.View {
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 selectedLeague = p0?.getItemAtPosition(p2) as League
+                EspressoIdlingResource.increment()
                 presenter.getMatchList()
             }
 
         }
-
+        EspressoIdlingResource.increment()
         presenter.getLeagueList()
 
     }
@@ -94,6 +97,9 @@ class PrevMatchFragment : Fragment(), PrevMatchContract.View {
     }
 
     override fun displayMatchList(events: List<Match>) {
+        if (!EspressoIdlingResource.idlingResource.isIdleNow){
+            EspressoIdlingResource.decrement()
+        }
         swipeRefreshLayout.isRefreshing = false
         val adapter = PrevMatchAdapter(events) {
             startActivity<MatchDetailActivity>(
@@ -112,6 +118,9 @@ class PrevMatchFragment : Fragment(), PrevMatchContract.View {
     }
 
     override fun displayLeagueList(leagues: List<League>) {
+        if (!EspressoIdlingResource.idlingResource.isIdleNow){
+            EspressoIdlingResource.decrement()
+        }
         val spinnerAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, leagues)
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spPrevMatchList.adapter = spinnerAdapter

@@ -17,7 +17,6 @@ constructor(
 ) : BasePresenter<V>(), MatchDetailContract.UserActionListener<V> {
 
     override fun getMatchDetail(matchId: String) {
-        EspressoIdlingResource.increment()
         view?.showLoading()
         GlobalScope.launch(context.main) {
             try {
@@ -29,9 +28,6 @@ constructor(
                         data.body()?.events?.get(0)?.let {
                             view?.displayMatch(it, favorite)
                             view?.hideLoading()
-                            if (!EspressoIdlingResource.idlingResource.isIdleNow){
-                                EspressoIdlingResource.decrement()
-                            }
                         }
                     }else{
                         view?.hideLoading()
@@ -50,7 +46,6 @@ constructor(
     }
 
     override fun getHomeTeamBadge(teamId: String) {
-        EspressoIdlingResource.increment()
         GlobalScope.launch(context.main) {
             try {
                 val data = teamRepository.getTeamDetail(teamId)
@@ -59,9 +54,6 @@ constructor(
                         data.body()?.teams?.get(0)?.let {
                             view?.displayHomeBadge(it.teamBadge)
                             view?.hideLoading()
-                        }
-                        if (!EspressoIdlingResource.idlingResource.isIdleNow){
-                            EspressoIdlingResource.decrement()
                         }
                     }else{
                         view?.hideLoading()
@@ -80,7 +72,6 @@ constructor(
     }
 
     override fun getAwayTeamBadge(teamId: String) {
-        EspressoIdlingResource.increment()
         GlobalScope.launch(context.main) {
             try {
                 val data = teamRepository.getTeamDetail(teamId)
@@ -89,9 +80,6 @@ constructor(
                         data.body()?.teams?.get(0)?.let {
                             view?.displayAwayBadge(it.teamBadge)
                             view?.hideLoading()
-                        }
-                        if (!EspressoIdlingResource.idlingResource.isIdleNow){
-                            EspressoIdlingResource.decrement()
                         }
                     }else{
                         view?.hideLoading()
@@ -110,21 +98,13 @@ constructor(
     }
 
     override fun addToFavorite(match: Match) {
-        EspressoIdlingResource.increment()
         matchRepository.addToFavorite(match)
         view?.onAddToFavorite()
-        if (!EspressoIdlingResource.idlingResource.isIdleNow){
-            EspressoIdlingResource.decrement()
-        }
     }
 
     override fun removeFromFavorite(match: Match) {
-        EspressoIdlingResource.increment()
         matchRepository.removeFromFavorite(match.matchId.toString())
         view?.onRemoveFromFavorite()
-        if (!EspressoIdlingResource.idlingResource.isIdleNow){
-            EspressoIdlingResource.decrement()
-        }
     }
 
 }

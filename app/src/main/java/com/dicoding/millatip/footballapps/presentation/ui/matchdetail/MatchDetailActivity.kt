@@ -42,6 +42,7 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailContract.View {
     override fun onResume() {
         super.onResume()
         val intent = intent
+        EspressoIdlingResource.increment()
         presenter.getMatchDetail(intent.getStringExtra(EXTRA_MATCH_ID))
         presenter.getHomeTeamBadge(intent.getStringExtra(EXTRA_HOME_TEAM_ID))
         presenter.getAwayTeamBadge(intent.getStringExtra(EXTRA_AWAY_TEAM_ID))
@@ -90,6 +91,9 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailContract.View {
     }
 
     override fun displayMatch(match: Match, favorite: Boolean) {
+        if (!EspressoIdlingResource.idlingResource.isIdleNow){
+            EspressoIdlingResource.decrement()
+        }
         this.match = match
         displayFavoriteStatus(favorite)
 
@@ -156,10 +160,16 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailContract.View {
     }
 
     override fun displayHomeBadge(teamBadge: String?) {
+        if (!EspressoIdlingResource.idlingResource.isIdleNow){
+            EspressoIdlingResource.decrement()
+        }
         Glide.with(this).load(teamBadge).into(ivHomeTeam)
     }
 
     override fun displayAwayBadge(teamBadge: String?) {
+        if (!EspressoIdlingResource.idlingResource.isIdleNow){
+            EspressoIdlingResource.decrement()
+        }
         Glide.with(this).load(teamBadge).into(ivAwayTeam)
     }
 

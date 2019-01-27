@@ -13,16 +13,12 @@ constructor(private val matchRepository: MatchRepository,
 ) : BasePresenter<V>(),
     FavoriteMatchContract.UserActionListener<V> {
     override fun getFavoriteMatchList() {
-        EspressoIdlingResource.increment()
         view?.showLoading()
         GlobalScope.launch(context.main) {
             try {
                 val data = matchRepository.getFavoriteMatches()
                 view?.displayFavoriteMatchList(data)
                 view?.hideLoading()
-                if (!EspressoIdlingResource.idlingResource.isIdleNow){
-                    EspressoIdlingResource.decrement()
-                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 view?.hideLoading()
