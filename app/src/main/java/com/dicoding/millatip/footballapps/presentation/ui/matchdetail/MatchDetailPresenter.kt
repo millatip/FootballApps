@@ -5,7 +5,6 @@ import com.dicoding.millatip.footballapps.data.repository.match.MatchRepository
 import com.dicoding.millatip.footballapps.data.repository.team.TeamRepository
 import com.dicoding.millatip.footballapps.presentation.base.BasePresenter
 import com.dicoding.millatip.footballapps.utils.CoroutineContextProvider
-import com.dicoding.millatip.footballapps.utils.EspressoIdlingResource
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

@@ -33,9 +33,6 @@ class TeamListPresenterTest {
     @Mock
     private lateinit var teamResponse: Response<TeamResponse>
 
-    @Mock
-    private lateinit var idlingResource: IdlingResource
-
     private lateinit var leagueMock: League
 
     private lateinit var presenter: TeamListPresenter<TeamListContract.View>
