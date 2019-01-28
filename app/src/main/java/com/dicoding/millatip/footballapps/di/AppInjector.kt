@@ -19,6 +19,8 @@ import com.dicoding.millatip.footballapps.presentation.ui.nextmatch.NextMatchCon
 import com.dicoding.millatip.footballapps.presentation.ui.nextmatch.NextMatchPresenter
 import com.dicoding.millatip.footballapps.presentation.ui.prevmatch.PrevMatchContract
 import com.dicoding.millatip.footballapps.presentation.ui.prevmatch.PrevMatchPresenter
+import com.dicoding.millatip.footballapps.presentation.ui.searchmatch.SearchMatchContract
+import com.dicoding.millatip.footballapps.presentation.ui.searchmatch.SearchMatchPresenter
 import com.dicoding.millatip.footballapps.presentation.ui.splash.SplashContract
 import com.dicoding.millatip.footballapps.presentation.ui.splash.SplashPresenter
 import com.dicoding.millatip.footballapps.presentation.ui.teamdetail.TeamDetailContract
@@ -79,14 +81,12 @@ val appModule = module {
     factory { NextMatchPresenter<NextMatchContract.View>(get(), get()) }
     factory { PrevMatchPresenter<PrevMatchContract.View>(get(), get()) }
     factory { MatchDetailPresenter<MatchDetailContract.View>(get(), get()) }
-    factory {
-        FavoriteMatchPresenter<FavoriteMatchContract.View>(
-            get()
-        )
-    }
+    factory { FavoriteMatchPresenter<FavoriteMatchContract.View>(get()) }
     factory { TeamListPresenter<TeamListContract.View>(get(), get()) }
     factory { TeamDetailPresenter<TeamDetailContract.View>(get()) }
     factory { TeamPlayerPresenter<TeamPlayerContract.View>(get()) }
-    factory { FavoriteTeamPresenter<FavoriteTeamContract.View>(get())}
+    factory { FavoriteTeamPresenter<FavoriteTeamContract.View>(get()) }
+    factory { SearchMatchPresenter<SearchMatchContract.View>(get()) }
+
 }
 

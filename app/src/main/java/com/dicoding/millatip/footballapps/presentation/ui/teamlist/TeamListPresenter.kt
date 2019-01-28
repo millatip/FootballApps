@@ -16,11 +16,15 @@ constructor(
     BasePresenter<V>(), TeamListContract.UserInteractionListener<V> {
 
     override fun searchTeam(teamName: String) {
-        GlobalScope.launch ( context.main ){
-            val data = teamRepository.getTeamSearchResult(view?.selectedLeague?.leagueId.toString())
-            view?.showLoading()
-            view?.displayTeamList(data.body()?.teams ?: mutableListOf())
-            view?.hideLoading()
+        if (teamName=="null"){
+            view?.displayErrorMessage("It's empty. We are searching for nothing.")
+        }else {
+            GlobalScope.launch(context.main) {
+                val data = teamRepository.getTeamSearchResult(view?.selectedLeague?.leagueId.toString())
+                view?.showLoading()
+                view?.displayTeamList(data.body()?.teams ?: mutableListOf())
+                view?.hideLoading()
+            }
         }
     }
 

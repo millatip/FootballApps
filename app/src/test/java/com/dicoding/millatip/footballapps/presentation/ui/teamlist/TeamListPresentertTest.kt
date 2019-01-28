@@ -1,6 +1,5 @@
 package com.dicoding.millatip.footballapps.presentation.ui.teamlist
 
-import android.support.test.espresso.IdlingResource
 import com.dicoding.millatip.footballapps.data.model.League
 import com.dicoding.millatip.footballapps.data.model.TeamResponse
 import com.dicoding.millatip.footballapps.data.repository.league.LeagueRepository
@@ -82,11 +81,21 @@ class TeamListPresenterTest {
     @Test
     fun shouldDisplayTeamListWhenSearchTeamSuccess() {
         runBlocking {
-            `when`(teamRepository.getTeamSearchResult("Arsenal")).thenReturn(teamResponse)
-            presenter.searchTeam("Arsenal")
-            verify(view).displayTeamList(teamResponse.body()?.teams ?: mutableListOf())
+            `when`(teamRepository.getTeamSearchResult("Esbjerg")).thenReturn(teamResponse)
+            presenter.searchTeam("Esbjerg")
             verify(view).showLoading()
+            verify(view).displayTeamList(teamResponse.body()?.teams ?: mutableListOf())
             verify(view).hideLoading()
+        }
+    }
+
+    @Test
+    fun shouldDisplayMessageWhenSearchEmpty(){
+        val teamName="null"
+        runBlocking {
+            `when`(teamRepository.getTeamSearchResult(teamName)).thenReturn(null)
+            presenter.searchTeam(teamName)
+            verify(view).displayErrorMessage(ArgumentMatchers.anyString())
         }
     }
 

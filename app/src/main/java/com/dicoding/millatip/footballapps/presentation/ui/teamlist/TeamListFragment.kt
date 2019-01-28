@@ -60,6 +60,24 @@ class TeamListFragment : Fragment(), TeamListContract.View {
 
         val searchView = MenuItemCompat.getActionView(menu.findItem(R.id.action_search)) as SearchView
         searchView.queryHint = "Search team..."
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                if (query.isNullOrEmpty()){
+                    val kata = "null"
+                    presenter.searchTeam(kata)
+                    presenter.getTeamList()
+                    spTeamList.show()
+                }else{
+                    pbTeamList.show()
+                }
+                return true
+            }
+
+        })
     }
 
     override fun showLoading() {
