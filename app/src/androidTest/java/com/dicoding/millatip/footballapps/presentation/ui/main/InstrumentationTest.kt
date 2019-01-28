@@ -3,7 +3,7 @@ package com.dicoding.millatip.footballapps.presentation.ui.main
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.Espresso.pressBack
 import android.support.test.espresso.IdlingRegistry
-import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.action.ViewActions.*
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.matcher.ViewMatchers.*
@@ -64,7 +64,8 @@ class InstrumentationTest {
         onView(withId(action_team)).perform(click())
         onView(withId(action_search)).check(matches(isDisplayed()))
         onView(withId(action_search)).perform(click()).check(matches(isDisplayed()))
-        onView(withText("Search team..."))
+        onView(withId(action_search)).perform(typeText("Arsenal"))
+        onView(withId(action_search)).perform(closeSoftKeyboard())
     }
 
     @After
