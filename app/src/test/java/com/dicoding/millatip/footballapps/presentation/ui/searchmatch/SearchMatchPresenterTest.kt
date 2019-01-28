@@ -10,7 +10,6 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import retrofit2.Response
@@ -36,7 +35,7 @@ class SearchMatchPresenterTest {
 
     @Test
     fun shouldDisplayTeamListWhenSearchTeamSuccess() {
-        val teamName="Esbjerg"
+        val teamName = "Esbjerg"
         runBlocking {
             Mockito.`when`(matchRepository.getMatchSearchResult(teamName)).thenReturn(matchResponse)
             presenter.searchMatch(teamName)
@@ -47,10 +46,9 @@ class SearchMatchPresenterTest {
     }
 
     @Test
-    fun shouldDisplayMessageWhenTextEmpty(){
-        val teamName="null"
+    fun shouldDisplayMessageWhenTextEmpty() {
+        val teamName = ""
         runBlocking {
-            `when`(matchRepository.getMatchSearchResult(teamName)).thenReturn(null)
             presenter.searchMatch(teamName)
             verify(view).displayErrorMessage(ArgumentMatchers.anyString())
         }

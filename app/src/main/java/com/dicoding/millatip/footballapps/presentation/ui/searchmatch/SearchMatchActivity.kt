@@ -9,6 +9,7 @@ import android.widget.SearchView
 import com.dicoding.millatip.footballapps.R
 import com.dicoding.millatip.footballapps.utils.show
 import kotlinx.android.synthetic.main.activity_search_match.*
+import org.jetbrains.anko.design.snackbar
 import org.koin.android.ext.android.inject
 
 class SearchMatchActivity : AppCompatActivity() {
@@ -34,9 +35,9 @@ class SearchMatchActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(query: String?): Boolean {
                 if (query.isNullOrEmpty()){
-                    presenter.searchMatch("null")
+                    presenter.searchMatch("")
+                    pbSearchMatch.snackbar("It's empty. We are searching for nothing.")
                 }else{
-
                 }
                 return true
             }
