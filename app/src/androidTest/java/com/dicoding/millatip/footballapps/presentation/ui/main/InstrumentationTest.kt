@@ -35,7 +35,8 @@ class InstrumentationTest {
         onView(withId(rvPrevMatch)).check(matches(isDisplayed()))
         onView(withId(action_search)).check(matches(isDisplayed()))
         onView(withId(action_search)).perform(click())
-        onView(withText("isOpened")).check(matches(isDisplayed()))
+        onView(withId(pbSearchMatch)).check(matches(isDisplayed()))
+
         pressBack()
         onView(withId(rvPrevMatch)).check(matches(isDisplayed()))
         onView(withId(rvPrevMatch)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(6))
@@ -64,8 +65,10 @@ class InstrumentationTest {
         onView(withId(action_team)).perform(click())
         onView(withId(action_search)).check(matches(isDisplayed()))
         onView(withId(action_search)).perform(click()).check(matches(isDisplayed()))
-        onView(withId(action_search)).perform(typeText("Arsenal"))
+        onView(withId(action_search)).perform(typeText("Esbjerg"))
         onView(withId(action_search)).perform(closeSoftKeyboard())
+        onView(withId(pbTeamList)).check(matches(isDisplayed()))
+        onView(withId(rvTeamList)).check(matches(isDisplayed()))
     }
 
     @After
