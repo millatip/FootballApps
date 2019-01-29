@@ -16,14 +16,30 @@ constructor(
     BasePresenter<V>(), TeamListContract.UserInteractionListener<V> {
 
     override fun searchTeam(teamName: String) {
-        if (teamName=="null"){
+        view?.showLoading()
+        if (teamName == "") {
+            view?.hideLoading()
             view?.displayErrorMessage("It's empty. We are searching for nothing.")
-        }else {
+        } else {
             GlobalScope.launch(context.main) {
-                val data = teamRepository.getTeamSearchResult(view?.selectedLeague?.leagueId.toString())
-                view?.showLoading()
-                view?.displayTeamList(data.body()?.teams ?: mutableListOf())
-                view?.hideLoading()
+                try {
+                    val data = teamRepository.getTeamSearchResult(teamName)
+                    if (data.isSuccessful) {
+                        if (data.code() == 200) {
+                            view?.hideLoading()
+                            view?.displayTeamList(data.body()?.teams ?: mutableListOf())
+                        } else {
+                            view?.hideLoading()
+                            view?.displayErrorMessage("Unable to load team data")
+                        }
+                    } else {
+                        view?.hideLoading()
+                        view?.displayErrorMessage("Unable to load team data")
+                    }
+                } catch (e: Exception) {
+                    view?.hideLoading()
+                    view?.displayErrorMessage("Unable to load the data")
+                }
             }
         }
     }

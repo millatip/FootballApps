@@ -82,7 +82,11 @@ class TeamListPresenterTest {
     fun shouldDisplayTeamListWhenSearchTeamSuccess() {
         runBlocking {
             `when`(teamRepository.getTeamSearchResult("Esbjerg")).thenReturn(teamResponse)
+            `when`(teamResponse.isSuccessful).thenReturn(true)
+            `when`(teamResponse.code()).thenReturn(200)
+
             presenter.searchTeam("Esbjerg")
+
             verify(view).showLoading()
             verify(view).displayTeamList(teamResponse.body()?.teams ?: mutableListOf())
             verify(view).hideLoading()
@@ -90,11 +94,11 @@ class TeamListPresenterTest {
     }
 
     @Test
-    fun shouldDisplayMessageWhenSearchEmpty(){
-        val teamName="null"
+    fun shouldDisplayMessageWhenSearchEmpty() {
+        val teamName = ""
         runBlocking {
-            `when`(teamRepository.getTeamSearchResult(teamName)).thenReturn(null)
             presenter.searchTeam(teamName)
+            verify(view).hideLoading()
             verify(view).displayErrorMessage(ArgumentMatchers.anyString())
         }
     }
@@ -104,6 +108,7 @@ class TeamListPresenterTest {
         val teamName = "1"
         runBlocking {
             `when`(teamRepository.getTeamSearchResult(teamName)).thenReturn(teamResponse)
+            `when`(teamResponse.isSuccessful).thenReturn(false)
             presenter.searchTeam(teamName)
             verify(view).showLoading()
             verify(view).hideLoading()
