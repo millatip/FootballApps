@@ -10,6 +10,7 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import retrofit2.Response
@@ -38,6 +39,8 @@ class SearchMatchPresenterTest {
         val teamName = "Esbjerg"
         runBlocking {
             Mockito.`when`(matchRepository.getMatchSearchResult(teamName)).thenReturn(matchResponse)
+            `when`(matchResponse.isSuccessful).thenReturn(true)
+            `when`(matchResponse.code()).thenReturn(200)
             presenter.searchMatch(teamName)
             Mockito.verify(view).showLoading()
             Mockito.verify(view).displayMatch(matchResponse.body()?.events ?: mutableListOf())
@@ -59,7 +62,10 @@ class SearchMatchPresenterTest {
         val matchName = "1"
         runBlocking {
             Mockito.`when`(matchRepository.getMatchSearchResult(matchName)).thenReturn(matchResponse)
+            `when`(matchResponse.isSuccessful).thenReturn(false)
+
             presenter.searchMatch(matchName)
+
             Mockito.verify(view).showLoading()
             Mockito.verify(view).hideLoading()
             Mockito.verify(view).displayErrorMessage(ArgumentMatchers.anyString())

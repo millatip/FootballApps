@@ -14,13 +14,24 @@ constructor(
     override fun searchMatch(matchName: String) {
         view?.showLoading()
         if (matchName == ""){
+            view?.hideLoading()
             view?.displayErrorMessage("It's empty. We are searching for nothing.")
         }else {
             GlobalScope.launch(context.main) {
                 try {
                     val data = matchRepository.getMatchSearchResult(matchName)
-                    view?.displayMatch(data.body()?.events ?: mutableListOf())
-                    view?.hideLoading()
+                    if (data.isSuccessful) {
+                        if (data.code() == 200) {
+                            view?.hideLoading()
+                            view?.displayMatch(data.body()?.event ?: mutableListOf())
+                        } else {
+                            view?.hideLoading()
+                            view?.displayErrorMessage("Unable to load team data")
+                        }
+                    } else {
+                        view?.hideLoading()
+                        view?.displayErrorMessage("Unable to load team data")
+                    }
                 } catch (e: Exception) {
                     view?.hideLoading()
                     view?.displayErrorMessage("Unable to load the data")

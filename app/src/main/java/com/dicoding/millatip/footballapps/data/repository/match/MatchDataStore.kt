@@ -15,7 +15,7 @@ import retrofit2.Response
 class MatchDataStore
 constructor(private val networkService: NetworkService, val context: Context) : MatchRepository {
     override suspend fun getMatchSearchResult(matchName: String): Response<MatchResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return networkService.searchMatch(matchName).await()
     }
 
     override suspend fun getFavoriteMatches(): List<FavoriteMatch> {
