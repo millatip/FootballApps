@@ -12,7 +12,6 @@ import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
 import com.dicoding.millatip.footballapps.R.id.*
 import com.dicoding.millatip.footballapps.utils.EspressoIdlingResource
-import org.jetbrains.anko.design.longSnackbar
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -23,25 +22,31 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class InstrumentationTest {
     @Rule
-    @JvmField var activityRule = ActivityTestRule(MainActivity::class.java)
+    @JvmField
+    var activityRule = ActivityTestRule(MainActivity::class.java)
 
     @Before
-    fun setUp(){
+    fun setUp() {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
     }
 
     @Test
-    fun testAppBehaviour(){
+    fun testAppBehaviour() {
 
         onView(withId(rvPrevMatch)).check(matches(isDisplayed()))
         onView(withId(action_search)).check(matches(isDisplayed()))
         onView(withId(action_search)).perform(click())
-        onView(withId(pbSearchMatch)).check(matches(isDisplayed()))
+        onView(withId(action_search)).perform(closeSoftKeyboard())
 
         pressBack()
         onView(withId(rvPrevMatch)).check(matches(isDisplayed()))
         onView(withId(rvPrevMatch)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(6))
-        onView(withId(rvPrevMatch)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(6, click()))
+        onView(withId(rvPrevMatch)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                6,
+                click()
+            )
+        )
 
         onView(withId(add_to_fav)).check(matches(isDisplayed()))
         onView(withId(add_to_fav)).perform(click())
@@ -54,7 +59,12 @@ class InstrumentationTest {
 
         onView(withId(rvFavoriteMatch)).check(matches(isDisplayed()))
         onView(withId(rvFavoriteMatch)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))
-        onView(withId(rvFavoriteMatch)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+        onView(withId(rvFavoriteMatch)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
 
         onView(withId(add_to_fav)).check(matches(isDisplayed()))
         onView(withId(add_to_fav)).perform(click())
@@ -67,14 +77,15 @@ class InstrumentationTest {
         onView(withId(action_search)).check(matches(isDisplayed()))
         onView(withId(action_search)).perform(click()).check(matches(isDisplayed()))
         onView(withId(action_search)).perform(typeText("Esbjerg"))
-        onView(withText("Esbjerg")).check(matches(isDisplayed()))
+        onView(withId(rvTeamList)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0)).perform(
+            click()
+        )
+        pressBack()
         onView(withId(action_search)).perform(closeSoftKeyboard())
-        onView(withId(pbTeamList)).check(matches(isDisplayed()))
-        onView(withId(rvTeamList)).check(matches(isDisplayed()))
     }
 
     @After
-    fun tearDown(){
+    fun tearDown() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResource)
     }
 }
