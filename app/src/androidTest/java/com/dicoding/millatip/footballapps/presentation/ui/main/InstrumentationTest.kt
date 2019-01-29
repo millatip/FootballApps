@@ -77,6 +77,7 @@ class InstrumentationTest {
         onView(withId(action_search)).check(matches(isDisplayed()))
         onView(withId(action_search)).perform(click()).check(matches(isDisplayed()))
         onView(withId(action_search)).perform(typeText("Esbjerg"))
+        onView(withText("Esbjerg")).check(matches(isDisplayed()))
         onView(withId(rvTeamList)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0)).perform(
             click()
         )
