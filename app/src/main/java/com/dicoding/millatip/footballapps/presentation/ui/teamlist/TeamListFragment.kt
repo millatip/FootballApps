@@ -60,23 +60,15 @@ class TeamListFragment : Fragment(), TeamListContract.View {
 
         val searchView = MenuItemCompat.getActionView(menu.findItem(R.id.action_search)) as SearchView
         searchView.queryHint = "Search team..."
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-                if (query.isNullOrEmpty()){
-                    val kata = ""
-                    presenter.searchTeam(kata)
-                    EspressoIdlingResource.increment()
-                    presenter.getTeamList()
-                    spTeamList.show()
-                }else{
-                    spTeamList.hide()
-                    EspressoIdlingResource.increment()
-                    presenter.searchTeam(query.toString())
-                }
+                spTeamList.hide()
+                EspressoIdlingResource.increment()
+                presenter.searchTeam(query.toString())
                 return true
             }
 
@@ -92,7 +84,7 @@ class TeamListFragment : Fragment(), TeamListContract.View {
     }
 
     override fun displayTeamList(teams: List<Team>) {
-        if (!EspressoIdlingResource.idlingResource.isIdleNow){
+        if (!EspressoIdlingResource.idlingResource.isIdleNow) {
             EspressoIdlingResource.decrement()
         }
         rvTeamList.adapter = TeamAdapter(requireContext(), teams) {
