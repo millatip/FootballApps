@@ -18,8 +18,8 @@ constructor(
     val context: Context
 ) : TeamRepository {
 
-    override suspend fun getTeamSearchResult(teamId: String): Response<TeamResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override suspend fun getTeamSearchResult(teamName: String): Response<TeamResponse> {
+        return networkService.searchTeamName(teamName).await()
     }
 
 

@@ -67,12 +67,14 @@ class TeamListFragment : Fragment(), TeamListContract.View {
 
             override fun onQueryTextChange(query: String?): Boolean {
                 if (query.isNullOrEmpty()){
-                    val kata = "null"
+                    val kata = ""
                     presenter.searchTeam(kata)
+                    EspressoIdlingResource.increment()
                     presenter.getTeamList()
                     spTeamList.show()
                 }else{
-                    pbTeamList.show()
+                    EspressoIdlingResource.increment()
+                    presenter.searchTeam(query.toString())
                 }
                 return true
             }
