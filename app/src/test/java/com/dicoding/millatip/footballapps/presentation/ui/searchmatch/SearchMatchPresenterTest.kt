@@ -51,10 +51,9 @@ class SearchMatchPresenterTest {
     @Test
     fun shouldDisplayMessageWhenTextEmpty() {
         val teamName = ""
-        runBlocking {
-            presenter.searchMatch(teamName)
-            verify(view).displayErrorMessage(ArgumentMatchers.anyString())
-        }
+        presenter.searchMatch(teamName)
+        verify(view).displayErrorMessage(ArgumentMatchers.anyString())
+
     }
 
     @Test
