@@ -34,18 +34,14 @@ class SearchMatchActivity : AppCompatActivity(), SearchMatchContract.View {
         val searchView = MenuItemCompat.getActionView(menu.findItem(R.id.action_search)) as SearchView
         searchView.queryHint = "Search match..."
         searchView.setIconifiedByDefault(false)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-                if (query.isNullOrEmpty()){
-                    presenter.searchMatch("")
-                }else{
-                    EspressoIdlingResource.increment()
-                    presenter.searchMatch(query.toString())
-                }
+                EspressoIdlingResource.increment()
+                presenter.searchMatch(query.toString())
                 return true
             }
 
@@ -54,7 +50,7 @@ class SearchMatchActivity : AppCompatActivity(), SearchMatchContract.View {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 true
@@ -68,10 +64,10 @@ class SearchMatchActivity : AppCompatActivity(), SearchMatchContract.View {
     }
 
     override fun displayMatch(matchList: List<Match>) {
-        if (!EspressoIdlingResource.idlingResource.isIdleNow){
+        if (!EspressoIdlingResource.idlingResource.isIdleNow) {
             EspressoIdlingResource.decrement()
         }
-        rvSearchMatch.adapter = SearchMatchAdapter(matchList){
+        rvSearchMatch.adapter = SearchMatchAdapter(matchList) {
             startActivity<MatchDetailActivity>(
                 MatchDetailActivity.EXTRA_MATCH_ID to it.matchId,
                 MatchDetailActivity.EXTRA_HOME_TEAM_ID to it.homeTeamId,
