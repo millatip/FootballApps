@@ -13,7 +13,7 @@ constructor(
 ) : BasePresenter<V>(), SearchMatchContract.UserInteractionListener<V> {
     override fun searchMatch(matchName: String) {
         view?.showLoading()
-        if (matchName == ""){
+        if (matchName.isEmpty()){
             view?.hideLoading()
             view?.displayErrorMessage("It's empty. We are searching for nothing.")
         }else {
