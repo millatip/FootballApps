@@ -17,7 +17,7 @@ constructor(
 
     override fun searchTeam(teamName: String) {
         view?.showLoading()
-        if (teamName == "") {
+        if (teamName.isEmpty()) {
             view?.hideLoading()
             view?.displayErrorMessage("It's empty. We are searching for nothing.")
         } else {
