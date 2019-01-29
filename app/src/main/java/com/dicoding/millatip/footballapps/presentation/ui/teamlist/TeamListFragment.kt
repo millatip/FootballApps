@@ -73,6 +73,7 @@ class TeamListFragment : Fragment(), TeamListContract.View {
                     presenter.getTeamList()
                     spTeamList.show()
                 }else{
+                    spTeamList.hide()
                     EspressoIdlingResource.increment()
                     presenter.searchTeam(query.toString())
                 }
