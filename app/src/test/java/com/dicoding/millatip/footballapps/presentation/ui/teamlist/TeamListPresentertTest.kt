@@ -96,11 +96,10 @@ class TeamListPresenterTest {
     @Test
     fun shouldDisplayMessageWhenSearchEmpty() {
         val teamName = ""
-        runBlocking {
-            presenter.searchTeam(teamName)
-            verify(view).hideLoading()
-            verify(view).displayErrorMessage(ArgumentMatchers.anyString())
-        }
+        presenter.searchTeam(teamName)
+        verify(view).hideLoading()
+        verify(view).displayErrorMessage(ArgumentMatchers.anyString())
+
     }
 
     @Test
