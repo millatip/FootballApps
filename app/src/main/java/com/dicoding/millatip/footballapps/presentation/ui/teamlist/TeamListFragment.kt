@@ -66,9 +66,15 @@ class TeamListFragment : Fragment(), TeamListContract.View {
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-                spTeamList.hide()
-                EspressoIdlingResource.increment()
-                presenter.searchTeam(query.toString())
+                if (query.isNullOrEmpty()) {
+                    spTeamList.show()
+                    EspressoIdlingResource.increment()
+                    presenter.getTeamList()
+                } else {
+                    spTeamList.hide()
+                    EspressoIdlingResource.increment()
+                    presenter.searchTeam(query.toString())
+                }
                 return true
             }
 
