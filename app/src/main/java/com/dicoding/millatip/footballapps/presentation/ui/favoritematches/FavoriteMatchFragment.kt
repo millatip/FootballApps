@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.dicoding.millatip.footballapps.R
 import com.dicoding.millatip.footballapps.data.model.FavoriteMatch
 import com.dicoding.millatip.footballapps.presentation.ui.matchdetail.MatchDetailActivity
+import com.dicoding.millatip.footballapps.utils.EspressoIdlingResource
 import com.dicoding.millatip.footballapps.utils.hide
 import com.dicoding.millatip.footballapps.utils.show
 import kotlinx.android.synthetic.main.fragment_favorite_match.*
@@ -45,6 +46,7 @@ class FavoriteMatchFragment : Fragment(),
         )
 
         swipeRefreshLayout.onRefresh {
+            EspressoIdlingResource.increment()
             presenter.getFavoriteMatchList()
         }
 
@@ -60,6 +62,11 @@ class FavoriteMatchFragment : Fragment(),
     }
 
     override fun displayFavoriteMatchList(matchList: List<FavoriteMatch>) {
+
+        if (!EspressoIdlingResource.idlingResource.isIdleNow) {
+            EspressoIdlingResource.decrement()
+        }
+
         swipeRefreshLayout.isRefreshing = false
 
         val adapter =

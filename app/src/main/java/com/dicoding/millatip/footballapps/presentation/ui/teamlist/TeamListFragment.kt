@@ -3,17 +3,18 @@ package com.dicoding.millatip.footballapps.presentation.ui.teamlist
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.SearchView
 
 import com.dicoding.millatip.footballapps.R
 import com.dicoding.millatip.footballapps.data.model.League
 import com.dicoding.millatip.footballapps.data.model.Team
 import com.dicoding.millatip.footballapps.presentation.ui.teamdetail.TeamDetailActivity
+import com.dicoding.millatip.footballapps.utils.EspressoIdlingResource
 import com.dicoding.millatip.footballapps.utils.hide
 import com.dicoding.millatip.footballapps.utils.show
 import kotlinx.android.synthetic.main.fragment_team_list.*
@@ -39,17 +40,45 @@ class TeamListFragment : Fragment(), TeamListContract.View {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         onAttachView()
-
+        setHasOptionsMenu(true)
         spTeamList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 selectedLeague = parent?.getItemAtPosition(position) as League
+                EspressoIdlingResource.increment()
                 presenter.getTeamList()
             }
         }
         presenter.getLeagueList()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_search, menu)
+
+        val searchView = MenuItemCompat.getActionView(menu.findItem(R.id.action_search)) as SearchView
+        searchView.queryHint = "Search team..."
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                if (query.isNullOrEmpty()) {
+                    spTeamList.show()
+                    EspressoIdlingResource.increment()
+                    presenter.getTeamList()
+                } else {
+                    spTeamList.hide()
+                    EspressoIdlingResource.increment()
+                    presenter.searchTeam(query.toString())
+                }
+                return true
+            }
+
+        })
     }
 
     override fun showLoading() {
@@ -61,6 +90,9 @@ class TeamListFragment : Fragment(), TeamListContract.View {
     }
 
     override fun displayTeamList(teams: List<Team>) {
+        if (!EspressoIdlingResource.idlingResource.isIdleNow) {
+            EspressoIdlingResource.decrement()
+        }
         rvTeamList.adapter = TeamAdapter(requireContext(), teams) {
             startActivity<TeamDetailActivity>(TeamDetailActivity.EXTRA_TEAM to it.teamId)
         }

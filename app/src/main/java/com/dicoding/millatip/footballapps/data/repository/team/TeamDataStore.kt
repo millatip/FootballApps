@@ -18,6 +18,11 @@ constructor(
     val context: Context
 ) : TeamRepository {
 
+    override suspend fun getTeamSearchResult(teamName: String): Response<TeamResponse> {
+        return networkService.searchTeamName(teamName).await()
+    }
+
+
     override suspend fun getFavoriteTeamList(): List<FavoriteTeam> {
         var teamList: List<FavoriteTeam> = mutableListOf()
 

@@ -12,4 +12,5 @@ interface TeamRepository {
     suspend fun isFavorite(teamId: String) : Boolean
     fun addToFavorite(team: Team)
     fun removeFromFavorite(teamId: String)
+    suspend fun getTeamSearchResult(teamName: String): Response<TeamResponse>
 }

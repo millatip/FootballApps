@@ -14,6 +14,10 @@ import retrofit2.Response
 
 class MatchDataStore
 constructor(private val networkService: NetworkService, val context: Context) : MatchRepository {
+    override suspend fun getMatchSearchResult(matchName: String): Response<MatchResponse> {
+        return networkService.searchMatch(matchName).await()
+    }
+
     override suspend fun getFavoriteMatches(): List<FavoriteMatch> {
         var favoriteList: List<FavoriteMatch> = mutableListOf()
 
