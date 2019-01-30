@@ -12,6 +12,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
 import com.dicoding.millatip.footballapps.R.id.*
 import com.dicoding.millatip.footballapps.utils.EspressoIdlingResource
+import org.hamcrest.CoreMatchers.allOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -77,7 +78,7 @@ class InstrumentationTest {
         onView(withId(action_search)).check(matches(isDisplayed()))
         onView(withId(action_search)).perform(click()).check(matches(isDisplayed()))
         onView(withId(action_search)).perform(typeText("Esbjerg"))
-        onView(withText("Esbjerg")).check(matches(isDisplayed()))
+        onView(allOf(withId(tvTeamName), withText("Esbjerg"))).check(matches(isDisplayed()))
         onView(withId(rvTeamList)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0)).perform(
             click()
         )
